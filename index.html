@@ -3,188 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pro Invoice & Receipt Generator</title>
+  <title>SwiftInvoice Pro — Free Invoice & Receipt Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
   <!-- Header -->
   <header id="appHeader" class="bg-indigo-600 text-white py-4 shadow-md transition-colors duration-300">
     <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
       <div class="flex items-center space-x-2">
-        <span class="text-xl font-bold">⚡ SwiftInvoice Pro</span>
-        <span id="badgeMode" class="text-xs bg-indigo-500 px-2.5 py-1 rounded-full font-medium uppercase tracking-wider">Invoice</span>
+        <span class="text-lg sm:text-xl font-bold tracking-tight">⚡ SwiftInvoice</span>
+        <span id="badgeMode" class="text-[10px] bg-indigo-500 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">Invoice</span>
       </div>
-      <div class="flex items-center space-x-3">
-        <button onclick="openProModal()" class="bg-amber-400 hover:bg-amber-500 text-gray-900 text-xs font-bold px-3 py-1.5 rounded shadow transition">
-          ⭐ Remove Watermark ($5)
-        </button>
-      </div>
+      <button onclick="openProModal()" class="bg-amber-400 hover:bg-amber-500 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-lg shadow transition">
+        ⭐ Remove Watermark ($5)
+      </button>
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
+  <main class="max-w-5xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
     
-    <!-- Top Ad Banner Placeholder (Google AdSense) -->
-    <div class="p-4 bg-white border border-dashed border-gray-300 text-center text-xs text-gray-400 rounded-lg shadow-sm">
-      [ Google AdSense Banner Ad Slot — High CPC Business / Finance ]
+    <!-- Google AdSense Banner Slot -->
+    <div class="p-3 bg-white border border-dashed border-slate-300 text-center text-xs text-slate-400 rounded-xl shadow-sm">
+      [ Ad Space — Google AdSense / Banner Ads ]
     </div>
 
-    <!-- Main Builder Grid -->
+    <!-- Main Container Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- Controls Column (Left) -->
-      <div class="lg:col-span-5 space-y-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+      <!-- Builder Controls (Left Column) -->
+      <div class="lg:col-span-5 space-y-6 bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
         
-        <!-- Document Settings -->
+        <!-- 1. Setup -->
         <div>
-          <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide border-b pb-2 mb-4">1. Document Setup</h2>
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">1. Document Settings</h2>
           
-          <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="grid grid-cols-2 gap-3 mb-3">
             <div>
-              <label class="block text-xs font-semibold text-gray-600 mb-1">Type</label>
-              <select id="docType" onchange="updateDocType()" class="w-full border p-2 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-indigo-500 outline-none">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Doc Type</label>
+              <select id="docType" onchange="updateDocType()" class="w-full border border-slate-300 p-2 rounded-lg text-xs bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
                 <option value="INVOICE">Invoice</option>
                 <option value="RECEIPT">Receipt</option>
                 <option value="ESTIMATE">Estimate / Quote</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600 mb-1">Currency</label>
-              <select id="currency" onchange="calculateTotals()" class="w-full border p-2 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-indigo-500 outline-none">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Currency</label>
+              <select id="currency" onchange="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
                 <option value="$">USD ($)</option>
+                <option value="MAD ">MAD (DH)</option>
                 <option value="€">EUR (€)</option>
                 <option value="£">GBP (£)</option>
-                <option value="MAD ">MAD (DH)</option>
                 <option value="AED ">AED (د.إ)</option>
                 <option value="SAR ">SAR (﷼)</option>
                 <option value="CA$">CAD (CA$)</option>
                 <option value="AU$">AUD (AU$)</option>
-                <option value="¥">JPY (¥)</option>
                 <option value="₹">INR (₹)</option>
                 <option value="CHF ">CHF (Fr)</option>
-                <option value="元">CNY (元)</option>
-                <option value="R$ ">BRL (R$)</option>
-                <option value="R ">ZAR (R)</option>
-                <option value="MX$">MXN (MX$)</option>
-                <option value="S$ ">SGD (S$)</option>
                 <option value="₺">TRY (₺)</option>
                 <option value="E£ ">EGP (E£)</option>
-                <option value="kr ">SEK (kr)</option>
-                <option value="NZ$">NZD (NZ$)</option>
               </select>
             </div>
           </div>
 
-          <div class="mb-4">
-            <label class="block text-xs font-semibold text-gray-600 mb-1">Theme Color</label>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Theme Color</label>
             <div class="flex space-x-2">
-              <button onclick="setTheme('indigo', '#4f46e5')" class="w-7 h-7 rounded-full bg-indigo-600 border-2 border-white shadow focus:outline-none"></button>
-              <button onclick="setTheme('emerald', '#059669')" class="w-7 h-7 rounded-full bg-emerald-600 border-2 border-white shadow focus:outline-none"></button>
-              <button onclick="setTheme('slate', '#334155')" class="w-7 h-7 rounded-full bg-slate-700 border-2 border-white shadow focus:outline-none"></button>
-              <button onclick="setTheme('amber', '#d97706')" class="w-7 h-7 rounded-full bg-amber-600 border-2 border-white shadow focus:outline-none"></button>
-              <button onclick="setTheme('ruby', '#e11d48')" class="w-7 h-7 rounded-full bg-rose-600 border-2 border-white shadow focus:outline-none"></button>
+              <button onclick="setTheme('indigo', '#4f46e5')" class="w-7 h-7 rounded-full bg-indigo-600 border-2 border-white shadow-sm focus:outline-none"></button>
+              <button onclick="setTheme('emerald', '#059669')" class="w-7 h-7 rounded-full bg-emerald-600 border-2 border-white shadow-sm focus:outline-none"></button>
+              <button onclick="setTheme('slate', '#334155')" class="w-7 h-7 rounded-full bg-slate-700 border-2 border-white shadow-sm focus:outline-none"></button>
+              <button onclick="setTheme('amber', '#d97706')" class="w-7 h-7 rounded-full bg-amber-600 border-2 border-white shadow-sm focus:outline-none"></button>
+              <button onclick="setTheme('ruby', '#e11d48')" class="w-7 h-7 rounded-full bg-rose-600 border-2 border-white shadow-sm focus:outline-none"></button>
             </div>
           </div>
         </div>
 
-        <!-- Business & Client Details -->
+        <!-- 2. Parties -->
         <div>
-          <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide border-b pb-2 mb-4">2. Parties & Dates</h2>
-          
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">2. Your Info & Client</h2>
           <div class="space-y-3">
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Your Business Name</label>
-              <input id="bizName" type="text" placeholder="e.g. Acme Agency LLC" oninput="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Your Business Name</label>
+              <input id="bizName" type="text" placeholder="e.g. My Freelance Studio" oninput="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Client Name / Company</label>
-              <input id="clientName" type="text" placeholder="e.g. John Doe / Global Tech" oninput="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Client Name / Company</label>
+              <input id="clientName" type="text" placeholder="e.g. Client Corporation" oninput="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
             </div>
             <div class="grid grid-cols-2 gap-2">
               <div>
-                <label class="block text-xs font-semibold text-gray-600">Issue Date</label>
-                <input id="issueDate" type="date" onchange="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Issue Date</label>
+                <input id="issueDate" type="date" onchange="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
               </div>
               <div>
-                <label class="block text-xs font-semibold text-gray-600">Due Date</label>
-                <input id="dueDate" type="date" onchange="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Due Date</label>
+                <input id="dueDate" type="date" onchange="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Line Items Manager -->
+        <!-- 3. Line Items -->
         <div>
-          <div class="flex justify-between items-center border-b pb-2 mb-4">
-            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide">3. Line Items</h2>
-            <button onclick="addItem()" class="text-xs bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-2.5 py-1 rounded font-semibold transition">+ Add Item</button>
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">3. Line Items</h2>
+            <button onclick="addItem()" class="text-xs bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-2.5 py-1 rounded-lg font-semibold transition">+ Add Item</button>
           </div>
-          
-          <div id="itemsContainer" class="space-y-3">
-            <!-- Dynamic items populated via JS -->
+          <div id="itemsContainer" class="space-y-2.5">
+            <!-- Items injected by JS -->
           </div>
         </div>
 
-        <!-- Tax & Totals Adjustments -->
+        <!-- 4. Adjustments -->
         <div>
-          <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide border-b pb-2 mb-4">4. Tax & Shipping</h2>
+          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">4. Tax & Adjustments</h2>
           <div class="grid grid-cols-3 gap-2">
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Tax / VAT (%)</label>
-              <input id="taxRate" type="number" value="0" oninput="calculateTotals()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Tax (%)</label>
+              <input id="taxRate" type="number" value="0" oninput="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Discount</label>
-              <input id="discountAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Discount</label>
+              <input id="discountAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
             </div>
             <div>
-              <label class="block text-xs font-semibold text-gray-600">Shipping</label>
-              <input id="shippingAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Shipping</label>
+              <input id="shippingAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
             </div>
           </div>
         </div>
 
-        <!-- Actions -->
+        <!-- Action Buttons -->
         <div class="pt-2 space-y-2">
-          <button onclick="window.print()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg shadow transition flex items-center justify-center space-x-2">
-            <span>🖨️ Print / Save as PDF</span>
+          <button onclick="window.print()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl shadow transition flex items-center justify-center space-x-2 text-sm">
+            <span>🖨️ Print / Download PDF</span>
           </button>
-          <button onclick="exportCSV()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg text-xs transition">
-            📥 Export Item Data (CSV)
+          <button onclick="exportCSV()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 px-4 rounded-xl text-xs transition">
+            📥 Export CSV Data
           </button>
         </div>
 
       </div>
 
-      <!-- Preview Column (Right) -->
+      <!-- Document Preview (Right Column) -->
       <div class="lg:col-span-7">
-        <div id="printArea" class="bg-white p-8 rounded-xl shadow-lg border border-gray-200 flex flex-col justify-between min-h-[720px] relative">
+        <div id="printArea" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between min-h-[640px]">
           
           <div>
-            <!-- Invoice Header Preview -->
-            <div class="flex justify-between items-start border-b pb-6">
+            <!-- Document Header -->
+            <div class="flex justify-between items-start border-b border-slate-100 pb-6">
               <div>
-                <h3 id="prevBiz" class="font-bold text-xl text-gray-900">Your Business Name</h3>
+                <h3 id="prevBiz" class="font-bold text-xl text-slate-900">Your Business Name</h3>
                 <p id="prevDocTitle" class="text-xs font-bold uppercase tracking-widest text-indigo-600 mt-1">Invoice</p>
               </div>
               <div class="text-right">
-                <p class="text-xs text-gray-400 font-medium"># <span id="prevInvNum">INV-2026-001</span></p>
-                <p class="text-xs text-gray-500 mt-1">Date: <span id="prevIssueDate">--/--/----</span></p>
-                <p class="text-xs text-gray-500">Due: <span id="prevDueDate">--/--/----</span></p>
+                <p class="text-xs text-slate-400 font-medium"># <span id="prevInvNum">INV-2026-001</span></p>
+                <p class="text-xs text-slate-500 mt-1">Date: <span id="prevIssueDate">--/--/----</span></p>
+                <p class="text-xs text-slate-500">Due: <span id="prevDueDate">--/--/----</span></p>
               </div>
             </div>
 
-            <!-- Client & Billed To -->
-            <div class="mt-6 flex justify-between">
-              <div>
-                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider">Billed To:</p>
-                <p id="prevClient" class="font-semibold text-sm text-gray-800 mt-1">Client Company Name</p>
-              </div>
+            <!-- Billed To -->
+            <div class="mt-6">
+              <p class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Billed To:</p>
+              <p id="prevClient" class="font-semibold text-sm text-slate-800 mt-0.5">Client Company Name</p>
             </div>
 
-            <!-- Items Table Preview -->
-            <div class="mt-8 overflow-x-auto">
+            <!-- Item Table -->
+            <div class="mt-6 overflow-x-auto">
               <table class="w-full text-left border-collapse">
                 <thead>
                   <tr id="tableHeaderRow" class="bg-indigo-600 text-white text-xs uppercase tracking-wider">
@@ -194,32 +180,32 @@
                     <th class="p-2.5 text-right rounded-r-lg">Total</th>
                   </tr>
                 </thead>
-                <tbody id="prevItemsList" class="text-sm divide-y divide-gray-100">
-                  <!-- Rendered rows -->
+                <tbody id="prevItemsList" class="text-xs sm:text-sm divide-y divide-slate-100">
+                  <!-- Dynamic Item Rows -->
                 </tbody>
               </table>
             </div>
 
-            <!-- Totals Calculation Preview -->
+            <!-- Calculated Subtotals -->
             <div class="mt-8 flex justify-end">
-              <div class="w-64 space-y-2 text-sm">
-                <div class="flex justify-between text-gray-600">
+              <div class="w-56 space-y-1.5 text-xs sm:text-sm">
+                <div class="flex justify-between text-slate-600">
                   <span>Subtotal:</span>
                   <span id="prevSub">$0.00</span>
                 </div>
-                <div id="rowTax" class="flex justify-between text-gray-600">
+                <div id="rowTax" class="flex justify-between text-slate-600">
                   <span>Tax (<span id="prevTaxRateVal">0</span>%):</span>
                   <span id="prevTax">$0.00</span>
                 </div>
-                <div id="rowDiscount" class="flex justify-between text-green-600">
+                <div id="rowDiscount" class="flex justify-between text-emerald-600">
                   <span>Discount:</span>
                   <span id="prevDiscount">-$0.00</span>
                 </div>
-                <div id="rowShipping" class="flex justify-between text-gray-600">
+                <div id="rowShipping" class="flex justify-between text-slate-600">
                   <span>Shipping:</span>
                   <span id="prevShipping">$0.00</span>
                 </div>
-                <div class="flex justify-between font-bold text-lg border-t pt-2 text-gray-900">
+                <div class="flex justify-between font-bold text-base border-t border-slate-200 pt-2 text-slate-900">
                   <span>Total Due:</span>
                   <span id="prevTotal" class="text-indigo-600">$0.00</span>
                 </div>
@@ -227,10 +213,10 @@
             </div>
           </div>
 
-          <!-- Watermark Footer -->
-          <div class="mt-12 pt-4 border-t text-center text-xs text-gray-400 flex justify-between items-center">
-            <span id="watermarkText">Generated via SwiftInvoice — Free Business Tool</span>
-            <span class="text-[10px] text-gray-300">100% Secure Client-Side</span>
+          <!-- Footer Watermark -->
+          <div class="mt-12 pt-4 border-t border-slate-100 text-center text-xs text-slate-400 flex justify-between items-center">
+            <span>Generated via SwiftInvoice</span>
+            <span class="text-[10px] text-slate-300">Client-Side Secure</span>
           </div>
 
         </div>
@@ -238,45 +224,40 @@
 
     </div>
 
-    <!-- Bottom Ad Banner Placeholder -->
-    <div class="p-4 bg-white border border-dashed border-gray-300 text-center text-xs text-gray-400 rounded-lg shadow-sm">
-      [ Google AdSense / Affiliate Footer Banner Slot ]
+    <!-- Ad Banner Footer -->
+    <div class="p-3 bg-white border border-dashed border-slate-300 text-center text-xs text-slate-400 rounded-xl shadow-sm">
+      [ Ad Space — Monetization Banner ]
     </div>
   </main>
 
-  <!-- Pro Upgrade Modal -->
-  <div id="proModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+  <!-- $5 Pro Upgrade Modal -->
+  <div id="proModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center p-4 z-50">
     <div class="bg-white max-w-md w-full p-6 rounded-2xl shadow-xl space-y-4">
       <div class="flex justify-between items-center">
-        <h3 class="font-bold text-lg text-gray-900">⭐ Unlock SwiftInvoice Pro</h3>
-        <button onclick="closeProModal()" class="text-gray-400 hover:text-gray-600 font-bold">✕</button>
+        <h3 class="font-bold text-base text-slate-900">⭐ Upgrade to Pro</h3>
+        <button onclick="closeProModal()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
       </div>
-      <p class="text-sm text-gray-600">
-        Remove watermarks, unlock custom company logos, white-label PDF generation, and premium multi-currency invoicing for a single $5 lifetime fee.
+      <p class="text-xs text-slate-600">
+        Remove watermarks, add custom business logos, and unlock premium export features for a single $5 lifetime access fee.
       </p>
-      <div class="bg-indigo-50 p-4 rounded-xl text-xs text-indigo-700 space-y-1">
-        <p>✔️ Remove footer watermark</p>
-        <p>✔️ Custom corporate logo upload</p>
-        <p>✔️ Priority export formats</p>
+      <div class="bg-indigo-50 p-3 rounded-xl text-xs text-indigo-700 space-y-1">
+        <p>✔ Clean PDF exports with no watermark</p>
+        <p>✔ Unlimited receipts and estimates</p>
+        <p>✔ Priority custom branding features</p>
       </div>
-      <a href="https://buy.stripe.com/placeholder" target="_blank" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-4 rounded-xl transition shadow">
-        Proceed to Secure Checkout ($5.00)
+      <a href="https://buy.stripe.com/placeholder" target="_blank" class="block w-full text-center bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2.5 px-4 rounded-xl transition shadow text-xs">
+        Proceed to Checkout ($5.00)
       </a>
-      <p class="text-[10px] text-center text-gray-400">Powered by Stripe / Lemon Squeezy secure payments.</p>
     </div>
   </div>
 
-  <!-- JavaScript Logic -->
   <script>
     let items = [
-      { desc: 'Web Development & Consulting', qty: 1, price: 500 },
-      { desc: 'UI/UX Design Assets', qty: 2, price: 150 }
+      { desc: 'Professional Services', qty: 1, price: 500 },
+      { desc: 'Consulting & Design', qty: 2, price: 100 }
     ];
 
-    let currentThemeColor = '#4f46e5';
-
     function init() {
-      // Set default dates
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('issueDate').value = today;
       
@@ -295,11 +276,11 @@
 
       items.forEach((item, index) => {
         container.innerHTML += `
-          <div class="flex items-center space-x-2 bg-gray-50 p-2.5 rounded-lg border">
-            <input type="text" value="${item.desc}" oninput="updateItem(${index}, 'desc', this.value)" placeholder="Description" class="flex-grow border p-1.5 rounded text-xs bg-white outline-none"/>
-            <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', this.value)" placeholder="Qty" class="w-14 border p-1.5 rounded text-xs bg-white text-center outline-none"/>
-            <input type="number" value="${item.price}" oninput="updateItem(${index}, 'price', this.value)" placeholder="Price" class="w-20 border p-1.5 rounded text-xs bg-white text-right outline-none"/>
-            <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 font-bold px-1.5 text-sm">×</button>
+          <div class="flex items-center space-x-1.5 bg-slate-50 p-2 rounded-lg border border-slate-200">
+            <input type="text" value="${item.desc}" oninput="updateItem(${index}, 'desc', this.value)" placeholder="Description" class="flex-grow border border-slate-200 p-1.5 rounded text-xs bg-white outline-none"/>
+            <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', this.value)" placeholder="Qty" class="w-12 border border-slate-200 p-1.5 rounded text-xs bg-white text-center outline-none"/>
+            <input type="number" value="${item.price}" oninput="updateItem(${index}, 'price', this.value)" placeholder="Price" class="w-16 border border-slate-200 p-1.5 rounded text-xs bg-white text-right outline-none"/>
+            <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 font-bold px-1 text-sm">×</button>
           </div>
         `;
       });
@@ -316,18 +297,18 @@
       items.forEach(item => {
         const lineTotal = (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
         tbody.innerHTML += `
-          <tr class="border-b border-gray-50">
-            <td class="py-2.5 pr-2 text-gray-800">${item.desc || 'Item description'}</td>
-            <td class="py-2.5 px-2 text-center text-gray-600">${item.qty}</td>
-            <td class="py-2.5 px-2 text-right text-gray-600">${curr}${parseFloat(item.price).toFixed(2)}</td>
-            <td class="py-2.5 pl-2 text-right font-medium text-gray-800">${curr}${lineTotal.toFixed(2)}</td>
+          <tr class="border-b border-slate-100">
+            <td class="py-2.5 pr-2 text-slate-800">${item.desc || 'Item description'}</td>
+            <td class="py-2.5 px-2 text-center text-slate-600">${item.qty}</td>
+            <td class="py-2.5 px-2 text-right text-slate-600">${curr}${parseFloat(item.price).toFixed(2)}</td>
+            <td class="py-2.5 pl-2 text-right font-medium text-slate-800">${curr}${lineTotal.toFixed(2)}</td>
           </tr>
         `;
       });
     }
 
     function addItem() {
-      items.push({ desc: 'New Service / Product', qty: 1, price: 100 });
+      items.push({ desc: 'New Line Item', qty: 1, price: 50 });
       renderItems();
     }
 
@@ -358,7 +339,6 @@
       const total = subtotal + taxAmt + shipping - discount;
       const curr = document.getElementById('currency').value;
 
-      // Update preview DOM
       document.getElementById('prevSub').innerText = curr + subtotal.toFixed(2);
       document.getElementById('prevTaxRateVal').innerText = taxRate;
       document.getElementById('prevTax').innerText = curr + taxAmt.toFixed(2);
@@ -366,7 +346,6 @@
       document.getElementById('prevShipping').innerText = curr + shipping.toFixed(2);
       document.getElementById('prevTotal').innerText = curr + Math.max(0, total).toFixed(2);
 
-      // Sync header fields
       document.getElementById('prevBiz').innerText = document.getElementById('bizName').value || 'Your Business Name';
       document.getElementById('prevClient').innerText = document.getElementById('clientName').value || 'Client Company Name';
       document.getElementById('prevIssueDate').innerText = document.getElementById('issueDate').value || '--/--/----';
@@ -382,7 +361,6 @@
     }
 
     function setTheme(name, hexColor) {
-      currentThemeColor = hexColor;
       document.getElementById('appHeader').style.backgroundColor = hexColor;
       document.getElementById('tableHeaderRow').style.backgroundColor = hexColor;
       document.getElementById('prevDocTitle').style.color = hexColor;
@@ -401,9 +379,7 @@
 
     function exportCSV() {
       let csv = 'Description,Quantity,Price\n';
-      items.forEach(i => {
-        csv += `"${i.desc}",${i.qty},${i.price}\n`;
-      });
+      items.forEach(i => { csv += `"${i.desc}",${i.qty},${i.price}\n`; });
       const blob = new Blob([csv], { type: 'text/csv' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
