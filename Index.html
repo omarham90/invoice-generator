@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pro Invoice & Receipt Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header id="appHeader" class="bg-indigo-600 text-white py-4 shadow-md transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <span class="text-xl font-bold">⚡ SwiftInvoice Pro</span>
+        <span id="badgeMode" class="text-xs bg-indigo-500 px-2.5 py-1 rounded-full font-medium uppercase tracking-wider">Invoice</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <button onclick="openProModal()" class="bg-amber-400 hover:bg-amber-500 text-gray-900 text-xs font-bold px-3 py-1.5 rounded shadow transition">
+          ⭐ Remove Watermark ($5)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
+    
+    <!-- Top Ad Banner Placeholder (Google AdSense) -->
+    <div class="p-4 bg-white border border-dashed border-gray-300 text-center text-xs text-gray-400 rounded-lg shadow-sm">
+      [ Google AdSense Banner Ad Slot — High CPC Business / Finance ]
+    </div>
+
+    <!-- Main Builder Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Controls Column (Left) -->
+      <div class="lg:col-span-5 space-y-6 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+        
+        <!-- Document Settings -->
+        <div>
+          <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide border-b pb-2 mb-4">1. Document Setup</h2>
+          
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Type</label>
+              <select id="docType" onchange="updateDocType()" class="w-full border p-2 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option value="INVOICE">Invoice</option>
+                <option value="RECEIPT">Receipt</option>
+                <option value="ESTIMATE">Estimate / Quote</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Currency</label>
+              <select id="currency" onchange="calculateTotals()" class="w-full border p-2 rounded-lg text-sm bg-gray-50 focus:ring-2 focus:ring-indigo-500 outline-none">
+                <option value="$">USD ($)</option>
+                <option value="€">EUR (€)</option>
+                <option value="£">GBP (£)</option>
+                <option value="MAD ">MAD (DH)</option>
+                <option value="AED ">AED (د.إ)</option>
+                <option value="SAR ">SAR (﷼)</option>
+                <option value="CA$">CAD (CA$)</option>
+                <option value="AU$">AUD (AU$)</option>
+                <option value="¥">JPY (¥)</option>
+                <option value="₹">INR (₹)</option>
+                <option value="CHF ">CHF (Fr)</option>
+                <option value="元">CNY (元)</option>
+                <option value="R$ ">BRL (R$)</option>
+                <option value="R ">ZAR (R)</option>
+                <option value="MX$">MXN (MX$)</option>
+                <option value="S$ ">SGD (S$)</option>
+                <option value="₺">TRY (₺)</option>
+                <option value="E£ ">EGP (E£)</option>
+                <option value="kr ">SEK (kr)</option>
+                <option value="NZ$">NZD (NZ$)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Theme Color</label>
+            <div class="flex space-x-2">
+              <button onclick="setTheme('indigo', '#4f46e5')" class="w-7 h-7 rounded-full bg-indigo-600 border-2 border-white shadow focus:outline-none"></button>
+              <button onclick="setTheme('emerald', '#059669')" class="w-7 h-7 rounded-full bg-emerald-600 border-2 border-white shadow focus:outline-none"></button>
+              <button onclick="setTheme('slate', '#334155')" class="w-7 h-7 rounded-full bg-slate-700 border-2 border-white shadow focus:outline-none"></button>
+              <button onclick="setTheme('amber', '#d97706')" class="w-7 h-7 rounded-full bg-amber-600 border-2 border-white shadow focus:outline-none"></button>
+              <button onclick="setTheme('ruby', '#e11d48')" class="w-7 h-7 rounded-full bg-rose-600 border-2 border-white shadow focus:outline-none"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business & Client Details -->
+        <div>
+          <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide border-b pb-2 mb-4">2. Parties & Dates</h2>
+          
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Your Business Name</label>
+              <input id="bizName" type="text" placeholder="e.g. Acme Agency LLC" oninput="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Client Name / Company</label>
+              <input id="clientName" type="text" placeholder="e.g. John Doe / Global Tech" oninput="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-xs font-semibold text-gray-600">Issue Date</label>
+                <input id="issueDate" type="date" onchange="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-gray-600">Due Date</label>
+                <input id="dueDate" type="date" onchange="saveAndRender()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Line Items Manager -->
+        <div>
+          <div class="flex justify-between items-center border-b pb-2 mb-4">
+            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide">3. Line Items</h2>
+            <button onclick="addItem()" class="text-xs bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-2.5 py-1 rounded font-semibold transition">+ Add Item</button>
+          </div>
+          
+          <div id="itemsContainer" class="space-y-3">
+            <!-- Dynamic items populated via JS -->
+          </div>
+        </div>
+
+        <!-- Tax & Totals Adjustments -->
+        <div>
+          <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wide border-b pb-2 mb-4">4. Tax & Shipping</h2>
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Tax / VAT (%)</label>
+              <input id="taxRate" type="number" value="0" oninput="calculateTotals()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Discount</label>
+              <input id="discountAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600">Shipping</label>
+              <input id="shippingAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border p-2 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 outline-none"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="pt-2 space-y-2">
+          <button onclick="window.print()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg shadow transition flex items-center justify-center space-x-2">
+            <span>🖨️ Print / Save as PDF</span>
+          </button>
+          <button onclick="exportCSV()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg text-xs transition">
+            📥 Export Item Data (CSV)
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Preview Column (Right) -->
+      <div class="lg:col-span-7">
+        <div id="printArea" class="bg-white p-8 rounded-xl shadow-lg border border-gray-200 flex flex-col justify-between min-h-[720px] relative">
+          
+          <div>
+            <!-- Invoice Header Preview -->
+            <div class="flex justify-between items-start border-b pb-6">
+              <div>
+                <h3 id="prevBiz" class="font-bold text-xl text-gray-900">Your Business Name</h3>
+                <p id="prevDocTitle" class="text-xs font-bold uppercase tracking-widest text-indigo-600 mt-1">Invoice</p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-gray-400 font-medium"># <span id="prevInvNum">INV-2026-001</span></p>
+                <p class="text-xs text-gray-500 mt-1">Date: <span id="prevIssueDate">--/--/----</span></p>
+                <p class="text-xs text-gray-500">Due: <span id="prevDueDate">--/--/----</span></p>
+              </div>
+            </div>
+
+            <!-- Client & Billed To -->
+            <div class="mt-6 flex justify-between">
+              <div>
+                <p class="text-xs font-bold uppercase text-gray-400 tracking-wider">Billed To:</p>
+                <p id="prevClient" class="font-semibold text-sm text-gray-800 mt-1">Client Company Name</p>
+              </div>
+            </div>
+
+            <!-- Items Table Preview -->
+            <div class="mt-8 overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr id="tableHeaderRow" class="bg-indigo-600 text-white text-xs uppercase tracking-wider">
+                    <th class="p-2.5 rounded-l-lg">Description</th>
+                    <th class="p-2.5 text-center">Qty</th>
+                    <th class="p-2.5 text-right">Price</th>
+                    <th class="p-2.5 text-right rounded-r-lg">Total</th>
+                  </tr>
+                </thead>
+                <tbody id="prevItemsList" class="text-sm divide-y divide-gray-100">
+                  <!-- Rendered rows -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Totals Calculation Preview -->
+            <div class="mt-8 flex justify-end">
+              <div class="w-64 space-y-2 text-sm">
+                <div class="flex justify-between text-gray-600">
+                  <span>Subtotal:</span>
+                  <span id="prevSub">$0.00</span>
+                </div>
+                <div id="rowTax" class="flex justify-between text-gray-600">
+                  <span>Tax (<span id="prevTaxRateVal">0</span>%):</span>
+                  <span id="prevTax">$0.00</span>
+                </div>
+                <div id="rowDiscount" class="flex justify-between text-green-600">
+                  <span>Discount:</span>
+                  <span id="prevDiscount">-$0.00</span>
+                </div>
+                <div id="rowShipping" class="flex justify-between text-gray-600">
+                  <span>Shipping:</span>
+                  <span id="prevShipping">$0.00</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg border-t pt-2 text-gray-900">
+                  <span>Total Due:</span>
+                  <span id="prevTotal" class="text-indigo-600">$0.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Watermark Footer -->
+          <div class="mt-12 pt-4 border-t text-center text-xs text-gray-400 flex justify-between items-center">
+            <span id="watermarkText">Generated via SwiftInvoice — Free Business Tool</span>
+            <span class="text-[10px] text-gray-300">100% Secure Client-Side</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Ad Banner Placeholder -->
+    <div class="p-4 bg-white border border-dashed border-gray-300 text-center text-xs text-gray-400 rounded-lg shadow-sm">
+      [ Google AdSense / Affiliate Footer Banner Slot ]
+    </div>
+  </main>
+
+  <!-- Pro Upgrade Modal -->
+  <div id="proModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+    <div class="bg-white max-w-md w-full p-6 rounded-2xl shadow-xl space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-lg text-gray-900">⭐ Unlock SwiftInvoice Pro</h3>
+        <button onclick="closeProModal()" class="text-gray-400 hover:text-gray-600 font-bold">✕</button>
+      </div>
+      <p class="text-sm text-gray-600">
+        Remove watermarks, unlock custom company logos, white-label PDF generation, and premium multi-currency invoicing for a single $5 lifetime fee.
+      </p>
+      <div class="bg-indigo-50 p-4 rounded-xl text-xs text-indigo-700 space-y-1">
+        <p>✔️ Remove footer watermark</p>
+        <p>✔️ Custom corporate logo upload</p>
+        <p>✔️ Priority export formats</p>
+      </div>
+      <a href="https://buy.stripe.com/placeholder" target="_blank" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-3 px-4 rounded-xl transition shadow">
+        Proceed to Secure Checkout ($5.00)
+      </a>
+      <p class="text-[10px] text-center text-gray-400">Powered by Stripe / Lemon Squeezy secure payments.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let items = [
+      { desc: 'Web Development & Consulting', qty: 1, price: 500 },
+      { desc: 'UI/UX Design Assets', qty: 2, price: 150 }
+    ];
+
+    let currentThemeColor = '#4f46e5';
+
+    function init() {
+      // Set default dates
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('issueDate').value = today;
+      
+      const due = new Date();
+      due.setDate(due.getDate() + 14);
+      document.getElementById('dueDate').value = due.toISOString().split('T')[0];
+
+      loadFromStorage();
+      renderItems();
+      calculateTotals();
+    }
+
+    function renderItems() {
+      const container = document.getElementById('itemsContainer');
+      container.innerHTML = '';
+
+      items.forEach((item, index) => {
+        container.innerHTML += `
+          <div class="flex items-center space-x-2 bg-gray-50 p-2.5 rounded-lg border">
+            <input type="text" value="${item.desc}" oninput="updateItem(${index}, 'desc', this.value)" placeholder="Description" class="flex-grow border p-1.5 rounded text-xs bg-white outline-none"/>
+            <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', this.value)" placeholder="Qty" class="w-14 border p-1.5 rounded text-xs bg-white text-center outline-none"/>
+            <input type="number" value="${item.price}" oninput="updateItem(${index}, 'price', this.value)" placeholder="Price" class="w-20 border p-1.5 rounded text-xs bg-white text-right outline-none"/>
+            <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 font-bold px-1.5 text-sm">×</button>
+          </div>
+        `;
+      });
+
+      renderPreviewTable();
+      calculateTotals();
+    }
+
+    function renderPreviewTable() {
+      const tbody = document.getElementById('prevItemsList');
+      tbody.innerHTML = '';
+      const curr = document.getElementById('currency').value;
+
+      items.forEach(item => {
+        const lineTotal = (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
+        tbody.innerHTML += `
+          <tr class="border-b border-gray-50">
+            <td class="py-2.5 pr-2 text-gray-800">${item.desc || 'Item description'}</td>
+            <td class="py-2.5 px-2 text-center text-gray-600">${item.qty}</td>
+            <td class="py-2.5 px-2 text-right text-gray-600">${curr}${parseFloat(item.price).toFixed(2)}</td>
+            <td class="py-2.5 pl-2 text-right font-medium text-gray-800">${curr}${lineTotal.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+    }
+
+    function addItem() {
+      items.push({ desc: 'New Service / Product', qty: 1, price: 100 });
+      renderItems();
+    }
+
+    function removeItem(index) {
+      if (items.length > 1) {
+        items.splice(index, 1);
+        renderItems();
+      }
+    }
+
+    function updateItem(index, field, value) {
+      items[index][field] = value;
+      renderPreviewTable();
+      calculateTotals();
+    }
+
+    function calculateTotals() {
+      let subtotal = 0;
+      items.forEach(item => {
+        subtotal += (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
+      });
+
+      const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+      const discount = parseFloat(document.getElementById('discountAmt').value) || 0;
+      const shipping = parseFloat(document.getElementById('shippingAmt').value) || 0;
+
+      const taxAmt = subtotal * (taxRate / 100);
+      const total = subtotal + taxAmt + shipping - discount;
+      const curr = document.getElementById('currency').value;
+
+      // Update preview DOM
+      document.getElementById('prevSub').innerText = curr + subtotal.toFixed(2);
+      document.getElementById('prevTaxRateVal').innerText = taxRate;
+      document.getElementById('prevTax').innerText = curr + taxAmt.toFixed(2);
+      document.getElementById('prevDiscount').innerText = '-' + curr + discount.toFixed(2);
+      document.getElementById('prevShipping').innerText = curr + shipping.toFixed(2);
+      document.getElementById('prevTotal').innerText = curr + Math.max(0, total).toFixed(2);
+
+      // Sync header fields
+      document.getElementById('prevBiz').innerText = document.getElementById('bizName').value || 'Your Business Name';
+      document.getElementById('prevClient').innerText = document.getElementById('clientName').value || 'Client Company Name';
+      document.getElementById('prevIssueDate').innerText = document.getElementById('issueDate').value || '--/--/----';
+      document.getElementById('prevDueDate').innerText = document.getElementById('dueDate').value || '--/--/----';
+
+      saveToStorage();
+    }
+
+    function updateDocType() {
+      const type = document.getElementById('docType').value;
+      document.getElementById('badgeMode').innerText = type;
+      document.getElementById('prevDocTitle').innerText = type;
+    }
+
+    function setTheme(name, hexColor) {
+      currentThemeColor = hexColor;
+      document.getElementById('appHeader').style.backgroundColor = hexColor;
+      document.getElementById('tableHeaderRow').style.backgroundColor = hexColor;
+      document.getElementById('prevDocTitle').style.color = hexColor;
+      document.getElementById('prevTotal').style.color = hexColor;
+    }
+
+    function openProModal() {
+      document.getElementById('proModal').classList.remove('hidden');
+      document.getElementById('proModal').classList.add('flex');
+    }
+
+    function closeProModal() {
+      document.getElementById('proModal').classList.remove('flex');
+      document.getElementById('proModal').classList.add('hidden');
+    }
+
+    function exportCSV() {
+      let csv = 'Description,Quantity,Price\n';
+      items.forEach(i => {
+        csv += `"${i.desc}",${i.qty},${i.price}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.setAttribute('href', url);
+      a.setAttribute('download', 'invoice_items.csv');
+      a.click();
+    }
+
+    function saveToStorage() {
+      const data = {
+        biz: document.getElementById('bizName').value,
+        client: document.getElementById('clientName').value,
+        currency: document.getElementById('currency').value,
+        items: items
+      };
+      localStorage.setItem('swift_invoice_data', JSON.stringify(data));
+    }
+
+    function loadFromStorage() {
+      const saved = localStorage.getItem('swift_invoice_data');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          if (data.biz) document.getElementById('bizName').value = data.biz;
+          if (data.client) document.getElementById('clientName').value = data.client;
+          if (data.currency) document.getElementById('currency').value = data.currency;
+          if (data.items && data.items.length > 0) items = data.items;
+        } catch(e) {}
+      }
+    }
+
+    function saveAndRender() {
+      calculateTotals();
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
