@@ -1,423 +1,1688 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2187249652252062"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SwiftInvoice Pro — Free Invoice & Receipt Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Header -->
-  <header id="appHeader" class="bg-indigo-600 text-white py-4 shadow-md transition-colors duration-300">
-    <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
-      <div class="flex items-center space-x-2">
-        <span class="text-lg sm:text-xl font-bold tracking-tight">⚡ SwiftInvoice</span>
-        <span id="badgeMode" class="text-[10px] bg-indigo-500 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">Invoice</span>
-      </div>
-      <button onclick="openProModal()" class="bg-amber-400 hover:bg-amber-500 text-slate-900 text-xs font-bold px-3 py-1.5 rounded-lg shadow transition">
-        ⭐ Remove Watermark ($5)
-      </button>
+  <title>SwiftInvoice — Free Invoice, Receipt & Quote Generator</title>
+  <meta name="description" content="Create professional invoices, receipts and estimates for free. Calculate tax, add discounts, print to PDF and export invoice data with SwiftInvoice.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#4338ca">
+  <link rel="canonical" href="https://tryquickinvoice.com/">
+
+  <!-- Keep your existing Google AdSense publisher ID -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2187249652252062"
+    crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --primary: #4338ca;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --surface: #ffffff;
+      --background: #f6f7fb;
+      --green: #047857;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Arial, sans-serif;
+      background: var(--background);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    a { color: var(--primary); }
+
+    button { cursor: pointer; }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      background: white;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 21px;
+      font-weight: 850;
+      letter-spacing: -0.8px;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      color: var(--primary);
+      margin-right: 5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 19px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #475569;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 750;
+      transition: .15s ease;
+    }
+
+    .button-primary {
+      color: white;
+      background: var(--primary);
+    }
+
+    .button-primary:hover { background: var(--primary-dark); }
+
+    .button-secondary {
+      background: white;
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .button-secondary:hover { background: #f8fafc; }
+
+    .button-small { padding: 8px 11px; font-size: 12px; }
+
+    .hero {
+      padding: 64px 0 38px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at top, #e8eaff 0, transparent 65%);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      max-width: 800px;
+      margin: 17px auto 13px;
+      font-size: clamp(32px, 5vw, 53px);
+      letter-spacing: -2px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      max-width: 660px;
+      margin: 0 auto 23px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      margin-top: 22px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .section { padding: 30px 0; }
+
+    .section-heading {
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(23px, 3vw, 30px);
+      letter-spacing: -.8px;
+      margin: 0 0 6px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: minmax(290px, .88fr) minmax(0, 1.12fr);
+      align-items: start;
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(15, 23, 42, .035);
+      min-width: 0;
+    }
+
+    .form-card { padding: 23px; }
+
+    .group { margin-bottom: 25px; }
+
+    .group:last-child { margin-bottom: 0; }
+
+    .group-title {
+      margin: 0 0 13px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 850;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+
+    .field { margin-bottom: 13px; min-width: 0; }
+
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 750;
+      color: #475569;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      padding: 10px 11px;
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      outline: none;
+      font-size: 13px;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, .10);
+    }
+
+    input[type="color"] {
+      padding: 3px;
+      height: 40px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .items-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+
+    .items-title .group-title { margin: 0; }
+
+    .item-editor {
+      border: 1px solid var(--line);
+      background: #f8fafc;
+      padding: 11px;
+      border-radius: 11px;
+      margin-bottom: 9px;
+    }
+
+    .item-editor .field { margin-bottom: 8px; }
+
+    .item-editor .field:last-child { margin-bottom: 0; }
+
+    .item-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      align-items: end;
+      gap: 8px;
+    }
+
+    .remove-item {
+      color: #be123c;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      border-radius: 8px;
+      padding: 9px 11px;
+      font-weight: 800;
+    }
+
+    .form-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .form-actions .button { width: 100%; }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 11px;
+      margin: 12px 0 0;
+    }
+
+    .preview-wrap { min-width: 0; }
+
+    .preview-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 11px;
+    }
+
+    .preview-toolbar strong { font-size: 13px; }
+
+    .preview-toolbar span { color: var(--muted); font-size: 11px; }
+
+    .invoice-paper {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(20px, 3vw, 36px);
+      box-shadow: 0 7px 25px rgba(15, 23, 42, .055);
+      overflow-wrap: anywhere;
+      min-height: 570px;
+    }
+
+    .invoice-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding-bottom: 23px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .invoice-business {
+      font-size: 21px;
+      font-weight: 850;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
+    .invoice-label {
+      margin-top: 7px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .invoice-meta {
+      text-align: right;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .invoice-meta p { margin: 3px 0; }
+
+    .bill-to { padding: 23px 0 18px; }
+
+    .mini-label {
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1px;
+      font-weight: 850;
+    }
+
+    .client-preview {
+      font-size: 14px;
+      font-weight: 750;
+      margin-top: 3px;
+    }
+
+    .table-scroll { overflow-x: auto; }
+
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .invoice-table th {
+      color: white;
+      background: var(--primary);
+      text-align: left;
+      padding: 11px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .invoice-table th:first-child { border-radius: 7px 0 0 7px; }
+
+    .invoice-table th:last-child { border-radius: 0 7px 7px 0; }
+
+    .invoice-table td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    .text-right { text-align: right !important; }
+
+    .text-center { text-align: center !important; }
+
+    .totals {
+      width: min(260px, 100%);
+      margin: 24px 0 0 auto;
+      font-size: 12px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 9px;
+    }
+
+    .total-row span:first-child { color: #64748b; }
+
+    .total-final {
+      border-top: 1px solid #cbd5e1;
+      padding-top: 13px;
+      margin-top: 13px;
+      font-size: 16px;
+      font-weight: 850;
+    }
+
+    .total-final span:last-child { color: var(--primary); }
+
+    .invoice-footer {
+      margin-top: 42px;
+      padding-top: 13px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #94a3b8;
+      font-size: 10px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .info-card { padding: 21px; }
+
+    .info-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 11px;
+      font-size: 20px;
+    }
+
+    .info-card h3 { font-size: 16px; margin: 13px 0 7px; }
+
+    .info-card p { color: var(--muted); font-size: 13px; margin: 0; }
+
+    .article {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(20px, 4vw, 34px);
+      margin-bottom: 18px;
+    }
+
+    .article h2 { font-size: 24px; letter-spacing: -.5px; margin-top: 0; }
+
+    .article h3 { font-size: 17px; margin-top: 25px; }
+
+    .article p, .article li { color: #475569; font-size: 14px; }
+
+    .article li { margin-bottom: 8px; }
+
+    .article p:last-child { margin-bottom: 0; }
+
+    .faq-item {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-item:last-child { border-bottom: 0; }
+
+    .faq-item h3 { margin: 0 0 5px; font-size: 14px; }
+
+    .faq-item p { margin: 0; }
+
+    .site-footer {
+      background: #111827;
+      color: #cbd5e1;
+      padding: 35px 0 24px;
+      margin-top: 45px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 28px;
+    }
+
+    .footer-brand { color: white; font-weight: 850; font-size: 18px; }
+
+    .footer-copy { font-size: 12px; color: #94a3b8; max-width: 340px; }
+
+    .footer-heading {
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+
+    .footer-links { display: grid; gap: 7px; }
+
+    .footer-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .footer-links a:hover { color: white; }
+
+    .copyright {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 11px;
+    }
+
+    .notice {
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 12px;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 850px) {
+      .builder-grid { grid-template-columns: 1fr; }
+      .content-grid { grid-template-columns: 1fr 1fr; }
+      .nav { padding: 12px 0; align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 12px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-top > div:first-child { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(100% - 22px, 1120px); }
+      .hero { padding-top: 40px; }
+      h1 { letter-spacing: -1.3px; }
+      .hero p { font-size: 14px; }
+      .nav-links { gap: 10px 13px; }
+      .nav-links a { font-size: 12px; }
+      .form-card { padding: 16px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .invoice-paper { padding: 16px 12px; }
+      .invoice-business { font-size: 17px; }
+      .invoice-table { font-size: 10px; }
+      .invoice-table th, .invoice-table td { padding: 9px 5px; }
+      .invoice-meta { font-size: 10px; }
+      .item-bottom { grid-template-columns: 1fr 1fr auto; }
+    }
+
+    @media print {
+      @page { size: auto; margin: 12mm; }
+
+      body { background: white !important; color: #111 !important; }
+
+      body * { visibility: hidden !important; }
+
+      #invoicePreview, #invoicePreview * { visibility: visible !important; }
+
+      #invoicePreview {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+      }
+
+      .invoice-table { width: 100% !important; }
+      .invoice-table tr { break-inside: avoid; }
+      .invoice-top, .totals, .invoice-footer { break-inside: avoid; }
+
+      .invoice-table th {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#home" class="brand"><span class="brand-mark">ϟ</span>SwiftInvoice</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#generator">Invoice Generator</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#guides">Invoice Guides</a>
+        <a href="#faq">FAQ</a>
+        <a href="#about">About</a>
+      </nav>
     </div>
   </header>
 
-  <main class="max-w-5xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
-    
-    <!-- Google AdSense Banner Slot -->
-    <div class="p-3 bg-white border border-dashed border-slate-300 text-center text-xs text-slate-400 rounded-xl shadow-sm">
-      [ Ad Space — Google AdSense / Banner Ads ]
-    </div>
-
-    <!-- Main Container Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      
-      <!-- Builder Controls (Left Column) -->
-      <div class="lg:col-span-5 space-y-6 bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
-        
-        <!-- 1. Setup -->
-        <div>
-          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">1. Document Settings</h2>
-          
-          <div class="grid grid-cols-2 gap-3 mb-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Doc Type</label>
-              <select id="docType" onchange="updateDocType()" class="w-full border border-slate-300 p-2 rounded-lg text-xs bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
-                <option value="INVOICE">Invoice</option>
-                <option value="RECEIPT">Receipt</option>
-                <option value="ESTIMATE">Estimate / Quote</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Currency</label>
-              <select id="currency" onchange="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs bg-slate-50 focus:ring-2 focus:ring-indigo-500 outline-none">
-                <option value="$">USD ($)</option>
-                <option value="MAD ">MAD (DH)</option>
-                <option value="€">EUR (€)</option>
-                <option value="£">GBP (£)</option>
-                <option value="AED ">AED (د.إ)</option>
-                <option value="SAR ">SAR (﷼)</option>
-                <option value="CA$">CAD (CA$)</option>
-                <option value="AU$">AUD (AU$)</option>
-                <option value="₹">INR (₹)</option>
-                <option value="CHF ">CHF (Fr)</option>
-                <option value="₺">TRY (₺)</option>
-                <option value="E£ ">EGP (E£)</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Theme Color</label>
-            <div class="flex space-x-2">
-              <button onclick="setTheme('indigo', '#4f46e5')" class="w-7 h-7 rounded-full bg-indigo-600 border-2 border-white shadow-sm focus:outline-none"></button>
-              <button onclick="setTheme('emerald', '#059669')" class="w-7 h-7 rounded-full bg-emerald-600 border-2 border-white shadow-sm focus:outline-none"></button>
-              <button onclick="setTheme('slate', '#334155')" class="w-7 h-7 rounded-full bg-slate-700 border-2 border-white shadow-sm focus:outline-none"></button>
-              <button onclick="setTheme('amber', '#d97706')" class="w-7 h-7 rounded-full bg-amber-600 border-2 border-white shadow-sm focus:outline-none"></button>
-              <button onclick="setTheme('ruby', '#e11d48')" class="w-7 h-7 rounded-full bg-rose-600 border-2 border-white shadow-sm focus:outline-none"></button>
-            </div>
-          </div>
+  <main id="home">
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">Free online business tool</span>
+        <h1>Create professional invoices in minutes.</h1>
+        <p>
+          Make invoices, receipts and estimates for your business or freelance
+          work. Add your items, calculate tax and discounts, then print or save
+          your document as a PDF.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#generator">Create an invoice →</a>
+          <a class="button button-secondary" href="#how-it-works">How it works</a>
         </div>
-
-        <!-- 2. Parties -->
-        <div>
-          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">2. Your Info & Client</h2>
-          <div class="space-y-3">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Your Business Name</label>
-              <input id="bizName" type="text" placeholder="e.g. My Freelance Studio" oninput="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Client Name / Company</label>
-              <input id="clientName" type="text" placeholder="e.g. Client Corporation" oninput="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Issue Date</label>
-                <input id="issueDate" type="date" onchange="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Due Date</label>
-                <input id="dueDate" type="date" onchange="saveAndRender()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-              </div>
-            </div>
-          </div>
+        <div class="trust-row">
+          <span>✓ No account required</span>
+          <span>✓ Multiple currencies</span>
+          <span>✓ Print or save as PDF</span>
+          <span>✓ CSV export</span>
         </div>
-
-        <!-- 3. Line Items -->
-        <div>
-          <div class="flex justify-between items-center mb-3">
-            <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider">3. Line Items</h2>
-            <button onclick="addItem()" class="text-xs bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-2.5 py-1 rounded-lg font-semibold transition">+ Add Item</button>
-          </div>
-          <div id="itemsContainer" class="space-y-2.5">
-            <!-- Items injected by JS -->
-          </div>
-        </div>
-
-        <!-- 4. Adjustments -->
-        <div>
-          <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">4. Tax & Adjustments</h2>
-          <div class="grid grid-cols-3 gap-2">
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Tax (%)</label>
-              <input id="taxRate" type="number" value="0" oninput="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Discount</label>
-              <input id="discountAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-1">Shipping</label>
-              <input id="shippingAmt" type="number" value="0" oninput="calculateTotals()" class="w-full border border-slate-300 p-2 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 outline-none"/>
-            </div>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="pt-2 space-y-2">
-          <button onclick="window.print()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-xl shadow transition flex items-center justify-center space-x-2 text-sm">
-            <span>🖨️ Print / Download PDF</span>
-          </button>
-          <button onclick="exportCSV()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2 px-4 rounded-xl text-xs transition">
-            📥 Export CSV Data
-          </button>
-        </div>
-
       </div>
+    </section>
 
-      <!-- Document Preview (Right Column) -->
-      <div class="lg:col-span-7">
-        <div id="printArea" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between min-h-[640px]">
-          
-          <div>
-            <!-- Document Header -->
-            <div class="flex justify-between items-start border-b border-slate-100 pb-6">
-              <div>
-                <h3 id="prevBiz" class="font-bold text-xl text-slate-900">Your Business Name</h3>
-                <p id="prevDocTitle" class="text-xs font-bold uppercase tracking-widest text-indigo-600 mt-1">Invoice</p>
+    <section class="section" id="generator">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Free invoice generator</h2>
+          <p>Enter your details and watch your document update instantly.</p>
+        </div>
+
+        <div class="builder-grid">
+          <section class="card form-card" aria-label="Invoice settings">
+            <div class="group">
+              <h3 class="group-title">1. Document settings</h3>
+              <div class="two-col">
+                <div class="field">
+                  <label for="docType">Document type</label>
+                  <select id="docType">
+                    <option value="Invoice">Invoice</option>
+                    <option value="Receipt">Receipt</option>
+                    <option value="Estimate / Quote">Estimate / Quote</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="currency">Currency</label>
+                  <select id="currency">
+                    <option value="USD">USD ($)</option>
+                    <option value="MAD">MAD (DH)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="AED">AED (د.إ)</option>
+                    <option value="SAR">SAR (﷼)</option>
+                    <option value="CAD">CAD (CA$)</option>
+                    <option value="AUD">AUD (A$)</option>
+                    <option value="INR">INR (₹)</option>
+                    <option value="CHF">CHF</option>
+                    <option value="TRY">TRY (₺)</option>
+                    <option value="EGP">EGP (E£)</option>
+                  </select>
+                </div>
               </div>
-              <div class="text-right">
-                <p class="text-xs text-slate-400 font-medium"># <span id="prevInvNum">INV-2026-001</span></p>
-                <p class="text-xs text-slate-500 mt-1">Date: <span id="prevIssueDate">--/--/----</span></p>
-                <p class="text-xs text-slate-500">Due: <span id="prevDueDate">--/--/----</span></p>
+              <div class="two-col">
+                <div class="field">
+                  <label for="invoiceNumber">Document number</label>
+                  <input id="invoiceNumber" maxlength="60" value="INV-001">
+                </div>
+                <div class="field">
+                  <label for="themeColor">Accent colour</label>
+                  <input id="themeColor" type="color" value="#4338ca">
+                </div>
               </div>
             </div>
 
-            <!-- Billed To -->
-            <div class="mt-6">
-              <p class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Billed To:</p>
-              <p id="prevClient" class="font-semibold text-sm text-slate-800 mt-0.5">Client Company Name</p>
+            <div class="group">
+              <h3 class="group-title">2. Business and client</h3>
+              <div class="field">
+                <label for="bizName">Your business name</label>
+                <input id="bizName" maxlength="120" placeholder="e.g. My Freelance Studio">
+              </div>
+              <div class="field">
+                <label for="bizDetails">Your business address or contact details (optional)</label>
+                <textarea id="bizDetails" rows="2" maxlength="500" placeholder="Business address, phone or email"></textarea>
+              </div>
+              <div class="field">
+                <label for="clientName">Client name / company</label>
+                <input id="clientName" maxlength="120" placeholder="e.g. Client Corporation">
+              </div>
+              <div class="field">
+                <label for="clientDetails">Client address (optional)</label>
+                <textarea id="clientDetails" rows="2" maxlength="500" placeholder="Client address or contact details"></textarea>
+              </div>
+              <div class="two-col">
+                <div class="field">
+                  <label for="issueDate">Issue date</label>
+                  <input id="issueDate" type="date">
+                </div>
+                <div class="field">
+                  <label for="dueDate">Due date</label>
+                  <input id="dueDate" type="date">
+                </div>
+              </div>
             </div>
 
-            <!-- Item Table -->
-            <div class="mt-6 overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr id="tableHeaderRow" class="bg-indigo-600 text-white text-xs uppercase tracking-wider">
-                    <th class="p-2.5 rounded-l-lg">Description</th>
-                    <th class="p-2.5 text-center">Qty</th>
-                    <th class="p-2.5 text-right">Price</th>
-                    <th class="p-2.5 text-right rounded-r-lg">Total</th>
-                  </tr>
-                </thead>
-                <tbody id="prevItemsList" class="text-xs sm:text-sm divide-y divide-slate-100">
-                  <!-- Dynamic Item Rows -->
-                </tbody>
-              </table>
+            <div class="group">
+              <div class="items-title">
+                <h3 class="group-title">3. Line items</h3>
+                <button type="button" id="addItem" class="button button-secondary button-small">+ Add item</button>
+              </div>
+              <div id="itemsContainer"></div>
+              <p class="form-note">Use a quantity and unit price for each product or service.</p>
             </div>
 
-            <!-- Calculated Subtotals -->
-            <div class="mt-8 flex justify-end">
-              <div class="w-56 space-y-1.5 text-xs sm:text-sm">
-                <div class="flex justify-between text-slate-600">
-                  <span>Subtotal:</span>
+            <div class="group">
+              <h3 class="group-title">4. Tax and adjustments</h3>
+              <div class="three-col">
+                <div class="field">
+                  <label for="taxRate">Tax (%)</label>
+                  <input id="taxRate" type="number" min="0" max="100" step="0.01" value="0">
+                </div>
+                <div class="field">
+                  <label for="discountAmt">Discount</label>
+                  <input id="discountAmt" type="number" min="0" step="0.01" value="0">
+                </div>
+                <div class="field">
+                  <label for="shippingAmt">Shipping</label>
+                  <input id="shippingAmt" type="number" min="0" step="0.01" value="0">
+                </div>
+              </div>
+              <div class="field">
+                <label for="notes">Notes or payment instructions (optional)</label>
+                <textarea id="notes" rows="3" maxlength="1000" placeholder="Thank you for your business."></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="printBtn" class="button button-primary">Print / Save PDF</button>
+              <button type="button" id="csvBtn" class="button button-secondary">Export CSV</button>
+              <button type="button" id="saveBtn" class="button button-secondary">Save in browser</button>
+              <button type="button" id="clearBtn" class="button button-secondary">New document</button>
+            </div>
+            <p id="saveStatus" class="form-note" role="status">
+              Your document is saved locally in this browser when automatic saving is available.
+            </p>
+          </section>
+
+          <section class="preview-wrap" aria-label="Document preview">
+            <div class="preview-toolbar">
+              <strong>Live document preview</strong>
+              <span>Updates as you type</span>
+            </div>
+
+            <article id="invoicePreview" class="invoice-paper">
+              <div class="invoice-top">
+                <div>
+                  <div id="prevBiz" class="invoice-business">Your Business Name</div>
+                  <div id="prevBizDetails" class="form-note"></div>
+                  <div id="prevDocTitle" class="invoice-label">Invoice</div>
+                </div>
+                <div class="invoice-meta">
+                  <p><strong>No. <span id="prevInvNum">INV-001</span></strong></p>
+                  <p>Date: <span id="prevIssueDate">—</span></p>
+                  <p>Due: <span id="prevDueDate">—</span></p>
+                </div>
+              </div>
+
+              <div class="bill-to">
+                <div class="mini-label">Billed to</div>
+                <div id="prevClient" class="client-preview">Client name</div>
+                <div id="prevClientDetails" class="form-note"></div>
+              </div>
+
+              <div class="table-scroll">
+                <table class="invoice-table">
+                  <thead>
+                    <tr id="tableHeaderRow">
+                      <th>Description</th>
+                      <th class="text-center">Qty</th>
+                      <th class="text-right">Unit price</th>
+                      <th class="text-right">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="prevItemsList"></tbody>
+                </table>
+              </div>
+
+              <div class="totals">
+                <div class="total-row">
+                  <span>Subtotal</span>
                   <span id="prevSub">$0.00</span>
                 </div>
-                <div id="rowTax" class="flex justify-between text-slate-600">
-                  <span>Tax (<span id="prevTaxRateVal">0</span>%):</span>
+                <div class="total-row" id="rowTax">
+                  <span>Tax (<span id="prevTaxRateVal">0</span>%)</span>
                   <span id="prevTax">$0.00</span>
                 </div>
-                <div id="rowDiscount" class="flex justify-between text-emerald-600">
-                  <span>Discount:</span>
-                  <span id="prevDiscount">-$0.00</span>
+                <div class="total-row" id="rowDiscount">
+                  <span>Discount</span>
+                  <span id="prevDiscount">−$0.00</span>
                 </div>
-                <div id="rowShipping" class="flex justify-between text-slate-600">
-                  <span>Shipping:</span>
+                <div class="total-row" id="rowShipping">
+                  <span>Shipping</span>
                   <span id="prevShipping">$0.00</span>
                 </div>
-                <div class="flex justify-between font-bold text-base border-t border-slate-200 pt-2 text-slate-900">
-                  <span>Total Due:</span>
-                  <span id="prevTotal" class="text-indigo-600">$0.00</span>
+                <div class="total-row total-final">
+                  <span>Total</span>
+                  <span id="prevTotal">$0.00</span>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Footer Watermark -->
-          <div class="mt-12 pt-4 border-t border-slate-100 text-center text-xs text-slate-400 flex justify-between items-center">
-            <span>Generated via SwiftInvoice</span>
-            <span class="text-[10px] text-slate-300">Client-Side Secure</span>
-          </div>
+              <div id="notesPreview" class="form-note" style="white-space:pre-wrap;margin-top:24px"></div>
 
+              <div class="invoice-footer">
+                <span id="prevFooterName">SwiftInvoice document</span>
+                <span>Thank you for your business</span>
+              </div>
+            </article>
+            <p class="form-note">
+              PDF tip: choose “Save as PDF” in your browser's print window.
+              Print preview may look slightly different across browsers.
+            </p>
+          </section>
         </div>
       </div>
+    </section>
 
-    </div>
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-heading">
+          <h2>How to create an invoice</h2>
+          <p>A straightforward process for freelancers, contractors and small businesses.</p>
+        </div>
+        <div class="content-grid">
+          <article class="card info-card">
+            <div class="info-icon">01</div>
+            <h3>Enter your details</h3>
+            <p>Add your business name, client information, document number and relevant dates.</p>
+          </article>
+          <article class="card info-card">
+            <div class="info-icon">02</div>
+            <h3>Add products or services</h3>
+            <p>Describe each item, enter the quantity and price, then check your subtotal and adjustments.</p>
+          </article>
+          <article class="card info-card">
+            <div class="info-icon">03</div>
+            <h3>Review and export</h3>
+            <p>Review your document carefully, print it or save it as a PDF, and export line items as CSV.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <!-- Ad Banner Footer -->
-    <div class="p-3 bg-white border border-dashed border-slate-300 text-center text-xs text-slate-400 rounded-xl shadow-sm">
-      [ Ad Space — Monetization Banner ]
-    </div>
+    <section class="section" id="guides">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Invoice guides for small businesses</h2>
+          <p>Understand the information to include and how to check your totals before sending a document.</p>
+        </div>
+
+        <article class="article">
+          <h2>What should a professional invoice include?</h2>
+          <p>
+            A professional invoice records what was supplied, who supplied it,
+            who is being billed and how much is due. Clear information helps
+            both parties understand the transaction and makes record keeping easier.
+          </p>
+          <h3>Essential invoice details</h3>
+          <ul>
+            <li><strong>Business information:</strong> your business name and relevant contact details.</li>
+            <li><strong>Client information:</strong> the name of the person or business being billed.</li>
+            <li><strong>Invoice number:</strong> a unique reference that helps you track the document.</li>
+            <li><strong>Dates:</strong> the invoice issue date and payment due date, where applicable.</li>
+            <li><strong>Itemised charges:</strong> clear descriptions, quantities, unit prices and line totals.</li>
+            <li><strong>Adjustments:</strong> any applicable tax, discount, shipping or other agreed charges.</li>
+            <li><strong>Payment instructions:</strong> how and when the client should pay.</li>
+          </ul>
+          <p>
+            Requirements differ by country, business type and transaction.
+            Check the rules that apply to you, especially if you must include
+            a tax registration number or prescribed tax information.
+          </p>
+        </article>
+
+        <article class="article">
+          <h2>How to calculate an invoice total</h2>
+          <p>
+            Start by multiplying each item's quantity by its unit price.
+            Add the line totals to find the subtotal. Apply the relevant tax
+            rate, add shipping or other agreed charges, and subtract any
+            applicable discount.
+          </p>
+          <h3>Example calculation</h3>
+          <ul>
+            <li>Three hours of work at $40 per hour: $120.00</li>
+            <li>One service charge: $30.00</li>
+            <li>Subtotal: $150.00</li>
+            <li>Tax at 10%, assuming it applies to the full subtotal: $15.00</li>
+            <li>Discount: $5.00</li>
+            <li><strong>Amount due: $160.00</strong></li>
+          </ul>
+          <p>
+            Tax rules can vary, including whether a discount is deducted before
+            or after tax. This generator uses a simple calculation and does
+            not determine your legal tax obligations. Confirm the correct
+            treatment for your jurisdiction.
+          </p>
+        </article>
+
+        <article class="article">
+          <h2>Invoice, receipt or estimate: what is the difference?</h2>
+          <h3>Invoice</h3>
+          <p>
+            An invoice requests payment for products or services supplied,
+            according to the agreed terms. It normally identifies the charges
+            and the amount due.
+          </p>
+          <h3>Receipt</h3>
+          <p>
+            A receipt generally confirms that a payment has been received.
+            Update the document's wording and payment status to reflect the
+            actual transaction before issuing it.
+          </p>
+          <h3>Estimate or quote</h3>
+          <p>
+            An estimate or quotation sets out proposed charges before work
+            begins or a purchase is completed. Make the validity period,
+            scope and conditions clear where appropriate.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Frequently asked questions</h2>
+          <p>Answers about using the SwiftInvoice document generator.</p>
+        </div>
+        <article class="article">
+          <div class="faq-item">
+            <h3>Is SwiftInvoice free to use?</h3>
+            <p>Yes. The invoice, receipt and estimate generator on this page is available without an account or a required subscription.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How do I download an invoice as a PDF?</h3>
+            <p>Choose Print / Save PDF. In the print dialog, select Save as PDF if that option is available in your browser.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Does the generator upload my invoice to a server?</h3>
+            <p>This version builds the document in your browser and saves its working data in browser local storage. Browser storage is not a cloud backup or a guarantee of secure storage. Avoid using a shared device for confidential documents.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I use different currencies?</h3>
+            <p>Yes. Choose from the listed currencies. The selection changes the currency formatting, but it does not convert amounts or obtain live exchange rates.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Does the calculator determine the correct tax rate?</h3>
+            <p>No. You enter the tax rate yourself. Confirm the rate and calculation method that apply to your transaction before sending your invoice.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Will my work be saved automatically?</h3>
+            <p>The generator attempts to save your settings and line items in your current browser. Clearing browser data, using another browser or device, or disabling storage may remove or prevent access to the saved information.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Can I use the generated documents for official accounting?</h3>
+            <p>You can use them to prepare business documents, but you are responsible for checking their accuracy and making sure they meet your local invoicing and record-keeping requirements.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <article class="article">
+          <h2>About SwiftInvoice</h2>
+          <p>
+            SwiftInvoice is a browser-based tool designed to make everyday
+            invoicing simpler for freelancers, independent professionals and
+            small businesses. The generator helps users prepare invoices,
+            receipts and estimates, calculate basic totals and create
+            printable documents without creating an account.
+          </p>
+          <p>
+            We aim to provide a clear, practical starting point for preparing
+            business documents. The tool is not an accounting service, tax
+            adviser or legal adviser. Users should verify their calculations
+            and document requirements before sending documents to clients.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <article class="article">
+          <h2>Contact SwiftInvoice</h2>
+          <p>
+            For questions about the website, accessibility, or this privacy
+            policy, contact us using the email address below.
+          </p>
+          <p><strong>Email:</strong>
+            <a href="mailto:YOUR_EMAIL_ADDRESS">YOUR_EMAIL_ADDRESS</a>
+          </p>
+          <p>Please replace this placeholder with an email address you monitor before publishing this website.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="privacy">
+      <div class="container">
+        <article class="article">
+          <h2>Privacy Policy</h2>
+          <p><strong>Last updated: October 15, 2026</strong></p>
+          <p>
+            This Privacy Policy explains how SwiftInvoice handles information
+            when you visit tryquickinvoice.com and use its document generator.
+            Please read it alongside any applicable notices or consent choices
+            shown on the website.
+          </p>
+
+          <h3>1. Information you enter</h3>
+          <p>
+            The generator allows you to enter business names, client details,
+            document dates, item descriptions, quantities, prices, tax rates
+            and other document information. The document is created in your
+            browser. Do not enter sensitive information that is unnecessary
+            for preparing your document.
+          </p>
+
+          <h3>2. Local browser storage</h3>
+          <p>
+            This version may use browser local storage to remember your
+            document settings and line items on the device you are using.
+            This information is not automatically backed up to a cloud account.
+            People with access to your device or browser profile may be able
+            to access locally saved information. You can clear the site's
+            stored data through your browser settings.
+          </p>
+
+          <h3>3. Advertising and cookies</h3>
+          <p>
+            This website may use Google AdSense to display advertisements.
+            Google and its partners may use cookies or similar technologies
+            to serve and measure ads, prevent fraud, and personalise advertising
+            where permitted by your settings, consent and applicable law.
+            Advertising services may process technical information such as
+            browser identifiers, IP addresses and information about visits.
+          </p>
+          <p>
+            Learn more at
+            <a href="https://policies.google.com/technologies/partner-sites"
+               target="_blank" rel="noopener noreferrer">How Google uses information from sites or apps that use its services</a>
+            and review available choices at
+            <a href="https://adssettings.google.com/"
+               target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.
+          </p>
+          <p>
+            Where legally required, appropriate consent and privacy choices
+            must be provided before relevant advertising technologies are used.
+            Your browser may also provide controls for managing cookies.
+          </p>
+
+          <h3>4. Third-party services</h3>
+          <p>
+            This website loads the Google advertising script. Other external
+            services may be introduced as the site develops. Third-party
+            providers may process information under their own privacy policies
+            and terms.
+          </p>
+
+          <h3>5. How information is used</h3>
+          <p>
+            Information entered in the generator is used to prepare and display
+            your document, calculate totals and retain working data in the
+            current browser when storage is available. Technical information
+            may also be processed by service providers to deliver advertising,
+            maintain service reliability and help prevent abuse.
+          </p>
+
+          <h3>6. Security and retention</h3>
+          <p>
+            No electronic system is completely secure. Information stored in
+            your browser may remain until you delete it or browser settings
+            remove it. We cannot guarantee the security of devices, browsers
+            or third-party services that we do not control.
+          </p>
+
+          <h3>7. Your privacy rights</h3>
+          <p>
+            Depending on your location and applicable law, you may have rights
+            to access, correct, delete or object to certain uses of personal
+            information. You may clear locally stored data and use available
+            advertising and consent settings. Contact us for privacy-related
+            questions using the address below.
+          </p>
+
+          <h3>8. Children's privacy</h3>
+          <p>
+            This website is intended for general business use and is not
+            specifically directed at children.
+          </p>
+
+          <h3>9. Policy changes</h3>
+          <p>
+            We may update this policy when our website, services or legal
+            obligations change. The revised date will be displayed at the
+            beginning of this policy.
+          </p>
+
+          <h3>10. Contact</h3>
+          <p>
+            For privacy questions, contact
+            <a href="mailto:YOUR_EMAIL_ADDRESS">YOUR_EMAIL_ADDRESS</a>.
+            Replace this placeholder with your real contact address before
+            publishing.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="terms">
+      <div class="container">
+        <article class="article">
+          <h2>Terms of Use</h2>
+          <p><strong>Last updated: October 15, 2026</strong></p>
+
+          <h3>1. Using the website</h3>
+          <p>
+            SwiftInvoice provides a browser-based tool for preparing business
+            documents. By using the website, you agree to use it lawfully and
+            not to interfere with its operation or attempt to misuse it.
+          </p>
+
+          <h3>2. Your documents and responsibility</h3>
+          <p>
+            You are responsible for the information you enter and the
+            documents you issue. Review all names, dates, item descriptions,
+            tax rates, calculations and payment instructions before sending
+            or relying on a document.
+          </p>
+
+          <h3>3. No professional advice</h3>
+          <p>
+            SwiftInvoice does not provide accounting, tax, legal or financial
+            advice. The generator uses the values you supply and does not
+            determine whether a transaction or tax calculation complies with
+            applicable laws.
+          </p>
+
+          <h3>4. Availability and data</h3>
+          <p>
+            We aim to keep the website available, but cannot guarantee
+            uninterrupted access. Browser data may be lost, and the generator
+            should not be treated as a document backup or accounting records
+            system. Keep your own copies of important documents.
+          </p>
+
+          <h3>5. Third-party services</h3>
+          <p>
+            The website may use third-party services, including advertising
+            services, that are subject to their own terms and policies.
+          </p>
+
+          <h3>6. Changes</h3>
+          <p>
+            Website features and these terms may change as the service
+            develops. Continued use after changes take effect is subject
+            to the updated terms, to the extent permitted by law.
+          </p>
+
+          <h3>7. Contact</h3>
+          <p>
+            Questions about these terms can be sent to
+            <a href="mailto:YOUR_EMAIL_ADDRESS">YOUR_EMAIL_ADDRESS</a>.
+            Replace this placeholder before publishing.
+          </p>
+        </article>
+      </div>
+    </section>
   </main>
 
-  <!-- $5 Pro Upgrade Modal -->
-  <div id="proModal" class="fixed inset-0 bg-slate-900/50 hidden items-center justify-center p-4 z-50">
-    <div class="bg-white max-w-md w-full p-6 rounded-2xl shadow-xl space-y-4">
-      <div class="flex justify-between items-center">
-        <h3 class="font-bold text-base text-slate-900">⭐ Upgrade to Pro</h3>
-        <button onclick="closeProModal()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand">ϟ SwiftInvoice</div>
+          <p class="footer-copy">
+            A simple online tool for creating invoices, receipts and estimates.
+            Prepare your document, review your totals and keep your own records.
+          </p>
+        </div>
+        <div>
+          <div class="footer-heading">Explore</div>
+          <div class="footer-links">
+            <a href="#generator">Invoice Generator</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#guides">Invoice Guides</a>
+            <a href="#faq">Frequently Asked Questions</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Information</div>
+          <div class="footer-links">
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#terms">Terms of Use</a>
+          </div>
+        </div>
       </div>
-      <p class="text-xs text-slate-600">
-        Remove watermarks, add custom business logos, and unlock premium export features for a single $5 lifetime access fee.
-      </p>
-      <div class="bg-indigo-50 p-3 rounded-xl text-xs text-indigo-700 space-y-1">
-        <p>✔ Clean PDF exports with no watermark</p>
-        <p>✔ Unlimited receipts and estimates</p>
-        <p>✔ Priority custom branding features</p>
+      <div class="copyright">
+        © <span id="currentYear">2026</span> SwiftInvoice. All rights reserved.
+        Check your local invoicing and tax requirements before issuing documents.
       </div>
-      <a href="https://buy.stripe.com/placeholder" target="_blank" class="block w-full text-center bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2.5 px-4 rounded-xl transition shadow text-xs">
-        Proceed to Checkout ($5.00)
-      </a>
     </div>
-  </div>
+  </footer>
 
   <script>
-    let items = [
-      { desc: 'Professional Services', qty: 1, price: 500 },
-      { desc: 'Consulting & Design', qty: 2, price: 100 }
-    ];
+    (() => {
+      "use strict";
 
-    function init() {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('issueDate').value = today;
-      
-      const due = new Date();
-      due.setDate(due.getDate() + 14);
-      document.getElementById('dueDate').value = due.toISOString().split('T')[0];
+      const STORAGE_KEY = "swiftinvoice_pro_v2";
 
-      loadFromStorage();
-      renderItems();
-      calculateTotals();
-    }
+      const $ = id => document.getElementById(id);
 
-    function renderItems() {
-      const container = document.getElementById('itemsContainer');
-      container.innerHTML = '';
+      const fields = [
+        "docType", "currency", "invoiceNumber", "themeColor",
+        "bizName", "bizDetails", "clientName", "clientDetails",
+        "issueDate", "dueDate", "taxRate", "discountAmt",
+        "shippingAmt", "notes"
+      ];
 
-      items.forEach((item, index) => {
-        container.innerHTML += `
-          <div class="flex items-center space-x-1.5 bg-slate-50 p-2 rounded-lg border border-slate-200">
-            <input type="text" value="${item.desc}" oninput="updateItem(${index}, 'desc', this.value)" placeholder="Description" class="flex-grow border border-slate-200 p-1.5 rounded text-xs bg-white outline-none"/>
-            <input type="number" value="${item.qty}" oninput="updateItem(${index}, 'qty', this.value)" placeholder="Qty" class="w-12 border border-slate-200 p-1.5 rounded text-xs bg-white text-center outline-none"/>
-            <input type="number" value="${item.price}" oninput="updateItem(${index}, 'price', this.value)" placeholder="Price" class="w-16 border border-slate-200 p-1.5 rounded text-xs bg-white text-right outline-none"/>
-            <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 font-bold px-1 text-sm">×</button>
-          </div>
-        `;
-      });
+      let items = [
+        { desc: "Professional Services", qty: 1, price: 500 },
+        { desc: "Consulting & Design", qty: 2, price: 100 }
+      ];
 
-      renderPreviewTable();
-      calculateTotals();
-    }
-
-    function renderPreviewTable() {
-      const tbody = document.getElementById('prevItemsList');
-      tbody.innerHTML = '';
-      const curr = document.getElementById('currency').value;
-
-      items.forEach(item => {
-        const lineTotal = (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
-        tbody.innerHTML += `
-          <tr class="border-b border-slate-100">
-            <td class="py-2.5 pr-2 text-slate-800">${item.desc || 'Item description'}</td>
-            <td class="py-2.5 px-2 text-center text-slate-600">${item.qty}</td>
-            <td class="py-2.5 px-2 text-right text-slate-600">${curr}${parseFloat(item.price).toFixed(2)}</td>
-            <td class="py-2.5 pl-2 text-right font-medium text-slate-800">${curr}${lineTotal.toFixed(2)}</td>
-          </tr>
-        `;
-      });
-    }
-
-    function addItem() {
-      items.push({ desc: 'New Line Item', qty: 1, price: 50 });
-      renderItems();
-    }
-
-    function removeItem(index) {
-      if (items.length > 1) {
-        items.splice(index, 1);
-        renderItems();
+      function localDateString(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
       }
-    }
 
-    function updateItem(index, field, value) {
-      items[index][field] = value;
-      renderPreviewTable();
-      calculateTotals();
-    }
+      function escapeCsv(value) {
+        return '"' + String(value ?? "").replace(/"/g, '""') + '"';
+      }
 
-    function calculateTotals() {
-      let subtotal = 0;
-      items.forEach(item => {
-        subtotal += (parseFloat(item.qty) || 0) * (parseFloat(item.price) || 0);
-      });
+      function numberValue(value) {
+        const number = Number(value);
+        return Number.isFinite(number) ? number : 0;
+      }
 
-      const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
-      const discount = parseFloat(document.getElementById('discountAmt').value) || 0;
-      const shipping = parseFloat(document.getElementById('shippingAmt').value) || 0;
+      function safeAmount(value) {
+        return Math.max(0, numberValue(value));
+      }
 
-      const taxAmt = subtotal * (taxRate / 100);
-      const total = subtotal + taxAmt + shipping - discount;
-      const curr = document.getElementById('currency').value;
-
-      document.getElementById('prevSub').innerText = curr + subtotal.toFixed(2);
-      document.getElementById('prevTaxRateVal').innerText = taxRate;
-      document.getElementById('prevTax').innerText = curr + taxAmt.toFixed(2);
-      document.getElementById('prevDiscount').innerText = '-' + curr + discount.toFixed(2);
-      document.getElementById('prevShipping').innerText = curr + shipping.toFixed(2);
-      document.getElementById('prevTotal').innerText = curr + Math.max(0, total).toFixed(2);
-
-      document.getElementById('prevBiz').innerText = document.getElementById('bizName').value || 'Your Business Name';
-      document.getElementById('prevClient').innerText = document.getElementById('clientName').value || 'Client Company Name';
-      document.getElementById('prevIssueDate').innerText = document.getElementById('issueDate').value || '--/--/----';
-      document.getElementById('prevDueDate').innerText = document.getElementById('dueDate').value || '--/--/----';
-
-      saveToStorage();
-    }
-
-    function updateDocType() {
-      const type = document.getElementById('docType').value;
-      document.getElementById('badgeMode').innerText = type;
-      document.getElementById('prevDocTitle').innerText = type;
-    }
-
-    function setTheme(name, hexColor) {
-      document.getElementById('appHeader').style.backgroundColor = hexColor;
-      document.getElementById('tableHeaderRow').style.backgroundColor = hexColor;
-      document.getElementById('prevDocTitle').style.color = hexColor;
-      document.getElementById('prevTotal').style.color = hexColor;
-    }
-
-    function openProModal() {
-      document.getElementById('proModal').classList.remove('hidden');
-      document.getElementById('proModal').classList.add('flex');
-    }
-
-    function closeProModal() {
-      document.getElementById('proModal').classList.remove('flex');
-      document.getElementById('proModal').classList.add('hidden');
-    }
-
-    function exportCSV() {
-      let csv = 'Description,Quantity,Price\n';
-      items.forEach(i => { csv += `"${i.desc}",${i.qty},${i.price}\n`; });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.setAttribute('href', url);
-      a.setAttribute('download', 'invoice_items.csv');
-      a.click();
-    }
-
-    function saveToStorage() {
-      const data = {
-        biz: document.getElementById('bizName').value,
-        client: document.getElementById('clientName').value,
-        currency: document.getElementById('currency').value,
-        items: items
-      };
-      localStorage.setItem('swift_invoice_data', JSON.stringify(data));
-    }
-
-    function loadFromStorage() {
-      const saved = localStorage.getItem('swift_invoice_data');
-      if (saved) {
+      function currencyFormat(amount) {
+        const currency = $("currency").value;
         try {
-          const data = JSON.parse(saved);
-          if (data.biz) document.getElementById('bizName').value = data.biz;
-          if (data.client) document.getElementById('clientName').value = data.client;
-          if (data.currency) document.getElementById('currency').value = data.currency;
-          if (data.items && data.items.length > 0) items = data.items;
-        } catch(e) {}
+          return new Intl.NumberFormat("en", {
+            style: "currency",
+            currency,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(amount);
+        } catch {
+          return currency + " " + amount.toFixed(2);
+        }
       }
-    }
 
-    function saveAndRender() {
-      calculateTotals();
-    }
+      function dateFormat(value) {
+        if (!value) return "—";
+        const parts = value.split("-").map(Number);
+        if (parts.length !== 3 || parts.some(n => !n)) return "—";
+        return new Date(parts[0], parts[1] - 1, parts[2])
+          .toLocaleDateString("en", {
+            day: "2-digit", month: "short", year: "numeric"
+          });
+      }
 
-    window.onload = init;
+      function setText(id, value) {
+        $(id).textContent = value;
+      }
+
+      function addCell(row, text, className) {
+        const cell = document.createElement("td");
+        cell.textContent = text;
+        if (className) cell.className = className;
+        row.appendChild(cell);
+      }
+
+      function renderItemEditors() {
+        const container = $("itemsContainer");
+        container.replaceChildren();
+
+        items.forEach((item, index) => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "item-editor";
+
+          const descriptionField = document.createElement("div");
+          descriptionField.className = "field";
+
+          const label = document.createElement("label");
+          label.textContent = "Description";
+          label.htmlFor = `itemDesc${index}`;
+
+          const description = document.createElement("input");
+          description.id = `itemDesc${index}`;
+          description.maxLength = 250;
+          description.placeholder = "Product or service";
+          description.value = item.desc;
+          description.addEventListener("input", () => {
+            items[index].desc = description.value;
+            renderPreview();
+            saveData(false);
+          });
+
+          descriptionField.append(label, description);
+
+          const bottom = document.createElement("div");
+          bottom.className = "item-bottom";
+
+          const qtyField = document.createElement("div");
+          qtyField.className = "field";
+
+          const qtyLabel = document.createElement("label");
+          qtyLabel.textContent = "Quantity";
+          qtyLabel.htmlFor = `itemQty${index}`;
+
+          const qty = document.createElement("input");
+          qty.id = `itemQty${index}`;
+          qty.type = "number";
+          qty.min = "0";
+          qty.max = "1000000000";
+          qty.step = "any";
+          qty.value = item.qty;
+          qty.addEventListener("input", () => {
+            items[index].qty = qty.value;
+            renderPreview();
+            saveData(false);
+          });
+
+          qtyField.append(qtyLabel, qty);
+
+          const priceField = document.createElement("div");
+          priceField.className = "field";
+
+          const priceLabel = document.createElement("label");
+          priceLabel.textContent = "Unit price";
+          priceLabel.htmlFor = `itemPrice${index}`;
+
+          const price = document.createElement("input");
+          price.id = `itemPrice${index}`;
+          price.type = "number";
+          price.min = "0";
+          price.max = "1000000000000";
+          price.step = "any";
+          price.value = item.price;
+          price.addEventListener("input", () => {
+            items[index].price = price.value;
+            renderPreview();
+            saveData(false);
+          });
+
+          priceField.append(priceLabel, price);
+
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "remove-item";
+          remove.textContent = "×";
+          remove.setAttribute("aria-label", `Remove item ${index + 1}`);
+          remove.title = "Remove item";
+          remove.addEventListener("click", () => {
+            if (items.length <= 1) {
+              $("saveStatus").textContent =
+                "Keep at least one line item in the document.";
+              return;
+            }
+            items.splice(index, 1);
+            renderItemEditors();
+            renderPreview();
+            saveData();
+          });
+
+          bottom.append(qtyField, priceField, remove);
+          wrapper.append(descriptionField, bottom);
+          container.appendChild(wrapper);
+        });
+      }
+
+      function renderPreview() {
+        const theme = $("themeColor").value || "#4338ca";
+        document.documentElement.style.setProperty("--primary", theme);
+        document.documentElement.style.setProperty(
+          "--primary-dark", theme
+        );
+
+        setText("prevBiz", $("bizName").value.trim() || "Your Business Name");
+        setText("prevBizDetails", $("bizDetails").value.trim());
+        setText("prevClient", $("clientName").value.trim() || "Client name");
+        setText("prevClientDetails", $("clientDetails").value.trim());
+        setText("prevDocTitle", $("docType").value);
+        setText("prevInvNum", $("invoiceNumber").value.trim() || "—");
+        setText("prevIssueDate", dateFormat($("issueDate").value));
+        setText("prevDueDate", dateFormat($("dueDate").value));
+        setText("prevFooterName", $("bizName").value.trim() || "SwiftInvoice document");
+        setText("notesPreview", $("notes").value.trim());
+
+        const tbody = $("prevItemsList");
+        tbody.replaceChildren();
+
+        let subtotal = 0;
+
+        items.forEach(item => {
+          const qty = safeAmount(item.qty);
+          const price = safeAmount(item.price);
+          const lineTotal = qty * price;
+          subtotal += lineTotal;
+
+          const row = document.createElement("tr");
+          addCell(row, item.desc.trim() || "Item description");
+          addCell(row, String(qty), "text-center");
+          addCell(row, currencyFormat(price), "text-right");
+          addCell(row, currencyFormat(lineTotal), "text-right");
+          tbody.appendChild(row);
+        });
+
+        const taxRate = Math.min(100, safeAmount($("taxRate").value));
+        const discount = safeAmount($("discountAmt").value);
+        const shipping = safeAmount($("shippingAmt").value);
+
+        const tax = subtotal * taxRate / 100;
+        const total = Math.max(0, subtotal + tax + shipping - discount);
+
+        setText("prevSub", currencyFormat(subtotal));
+        setText("prevTaxRateVal", String(taxRate));
+        setText("prevTax", currencyFormat(tax));
+        setText("prevDiscount", "−" + currencyFormat(discount));
+        setText("prevShipping", currencyFormat(shipping));
+        setText("prevTotal", currencyFormat(total));
+
+        $("rowTax").hidden = taxRate === 0;
+        $("rowDiscount").hidden = discount === 0;
+        $("rowShipping").hidden = shipping === 0;
+      }
+
+      function saveData(showStatus = true) {
+        try {
+          const data = {
+            fields: Object.fromEntries(
+              fields.map(id => [id, $(id).value])
+            ),
+            items
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+          if (showStatus) {
+            $("saveStatus").textContent =
+              "Saved in this browser. This is not a cloud backup.";
+          }
+        } catch (error) {
+          $("saveStatus").textContent =
+            "Browser storage is unavailable. Export a copy of your document.";
+        }
+      }
+
+      function loadData() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+
+          const data = JSON.parse(raw);
+
+          if (data.fields && typeof data.fields === "object") {
+            fields.forEach(id => {
+              if (typeof data.fields[id] === "string") {
+                $(id).value = data.fields[id];
+              }
+            });
+          }
+
+          if (Array.isArray(data.items) && data.items.length > 0) {
+            items = data.items.slice(0, 100).map(item => ({
+              desc: String(item.desc ?? "").slice(0, 250),
+              qty: String(item.qty ?? 1),
+              price: String(item.price ?? 0)
+            }));
+          }
+        } catch {
+          $("saveStatus").textContent =
+            "A saved document could not be loaded. You can start a new one.";
+        }
+      }
+
+      function addItem() {
+        if (items.length >= 100) {
+          $("saveStatus").textContent = "Maximum of 100 line items reached.";
+          return;
+        }
+
+        items.push({ desc: "", qty: 1, price: 0 });
+        renderItemEditors();
+        renderPreview();
+        saveData();
+      }
+
+      function exportCsv() {
+        const rows = [
+          ["Document Type", $("docType").value],
+          ["Document Number", $("invoiceNumber").value],
+          ["Business", $("bizName").value],
+          ["Client", $("clientName").value],
+          ["Issue Date", $("issueDate").value],
+          ["Due Date", $("dueDate").value],
+          [],
+          ["Description", "Quantity", "Unit Price", "Line Total"]
+        ];
+
+        let subtotal = 0;
+        items.forEach(item => {
+          const qty = safeAmount(item.qty);
+          const price = safeAmount(item.price);
+          const line = qty * price;
+          subtotal += line;
+          rows.push([item.desc, qty, price.toFixed(2), line.toFixed(2)]);
+        });
+
+        const taxRate = Math.min(100, safeAmount($("taxRate").value));
+        const discount = safeAmount($("discountAmt").value);
+        const shipping = safeAmount($("shippingAmt").value);
+        const tax = subtotal * taxRate / 100;
+        const total = Math.max(0, subtotal + tax + shipping - discount);
+
+        rows.push(
+          [],
+          ["Currency", $("currency").value],
+          ["Subtotal", subtotal.toFixed(2)],
+          ["Tax Rate (%)", taxRate],
+          ["Tax", tax.toFixed(2)],
+          ["Discount", discount.toFixed(2)],
+          ["Shipping", shipping.toFixed(2)],
+          ["Total", total.toFixed(2)]
+        );
+
+        const csv = "\uFEFF" + rows.map(row =>
+          row.map(escapeCsv).join(",")
+        ).join("\r\n");
+
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = ($("invoiceNumber").value.trim() || "invoice")
+          .replace(/[^a-z0-9_-]/gi, "_") + ".csv";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+
+      function newDocument() {
+        if (!confirm("Start a new document? Export or copy your current work first if you need it.")) {
+          return;
+        }
+
+        items = [{ desc: "", qty: 1, price: 0 }];
+
+        fields.forEach(id => {
+          const element = $(id);
+          if (element.tagName === "SELECT") {
+            element.selectedIndex = 0;
+          } else if (id === "invoiceNumber") {
+            element.value = "INV-001";
+          } else if (id === "themeColor") {
+            element.value = "#4338ca";
+          } else if (id === "taxRate" || id === "discountAmt" || id === "shippingAmt") {
+            element.value = "0";
+          } else {
+            element.value = "";
+          }
+        });
+
+        const today = new Date();
+        $("issueDate").value = localDateString(today);
+        const due = new Date(today);
+        due.setDate(due.getDate() + 14);
+        $("dueDate").value = localDateString(due);
+
+        renderItemEditors();
+        renderPreview();
+        saveData();
+
+        $("saveStatus").textContent =
+          "New document ready. Update its number and details before use.";
+      }
+
+      function init() {
+        const today = new Date();
+        $("issueDate").value = localDateString(today);
+
+        const due = new Date(today);
+        due.setDate(due.getDate() + 14);
+        $("dueDate").value = localDateString(due);
+
+        loadData();
+        renderItemEditors();
+        renderPreview();
+
+        $("currentYear").textContent = new Date().getFullYear();
+
+        fields.forEach(id => {
+          $(id).addEventListener("input", () => {
+            renderPreview();
+            saveData(false);
+          });
+          $(id).addEventListener("change", () => {
+            renderPreview();
+            saveData(false);
+          });
+        });
+
+        $("addItem").addEventListener("click", addItem);
+        $("printBtn").addEventListener("click", () => {
+          renderPreview();
+          window.print();
+        });
+        $("csvBtn").addEventListener("click", exportCsv);
+        $("saveBtn").addEventListener("click", () => saveData(true));
+        $("clearBtn").addEventListener("click", newDocument);
+      }
+
+      init();
+    })();
   </script>
 </body>
 </html>
