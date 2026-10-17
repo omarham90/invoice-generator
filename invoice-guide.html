@@ -1,94 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>How to Create an Invoice: A Simple Step-by-Step Guide | SwiftInvoice</title>
-  <meta name="description" content="Learn how to create a professional invoice, calculate taxes and totals, set payment terms, and save your invoice as a PDF using SwiftInvoice for free.">
+  <title>How to Create a Professional Invoice: Examples & Calculations | SwiftInvoice</title>
+
+  <meta name="description" content="Learn how to create a professional invoice, calculate totals, apply discounts and tax, set payment terms, and avoid common invoicing mistakes.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tryquickinvoice.com/invoice-guide.html">
 
-  <meta property="og:title" content="How to Create an Invoice | SwiftInvoice">
-  <meta property="og:description" content="A simple guide to creating professional invoices for freelancers and small businesses.">
+  <meta property="og:title" content="How to Create a Professional Invoice | SwiftInvoice">
+  <meta property="og:description" content="A practical guide to creating accurate, professional invoices.">
   <meta property="og:url" content="https://tryquickinvoice.com/invoice-guide.html">
   <meta property="og:type" content="article">
-
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #1e293b;
-      background: #f8fafc;
-      line-height: 1.7;
-    }
-    header {
-      background: #fff;
-      border-bottom: 1px solid #e2e8f0;
-      padding: 18px 20px;
-    }
-    nav {
-      max-width: 900px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-    .brand {
-      font-size: 22px;
-      font-weight: bold;
-      color: #2563eb;
-      text-decoration: none;
-    }
-    nav a { text-decoration: none; color: #334155; }
-    main {
-      max-width: 850px;
-      margin: 35px auto;
-      padding: 0 20px;
-    }
-    .hero, article, .cta {
-      background: white;
-      padding: 28px;
-      border-radius: 14px;
-      margin-bottom: 22px;
-      border: 1px solid #e2e8f0;
-    }
-    h1 { font-size: clamp(30px, 5vw, 43px); line-height: 1.2; }
-    h2 { margin-top: 30px; font-size: 25px; }
-    h3 { font-size: 19px; }
-    p, li { color: #475569; }
-    .button {
-      display: inline-block;
-      padding: 12px 20px;
-      background: #2563eb;
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .tip {
-      padding: 15px;
-      border-left: 4px solid #2563eb;
-      background: #eff6ff;
-      margin: 20px 0;
-    }
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      color: #64748b;
-    }
-    footer a { color: #2563eb; }
-  </style>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "How to Create an Invoice: A Simple Step-by-Step Guide",
-    "description": "Learn how to create a professional invoice and calculate totals.",
+    "headline": "How to Create a Professional Invoice: Examples and Calculations",
+    "description": "A practical guide to creating accurate professional invoices, calculating totals, applying discounts and tax, and setting payment terms.",
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://tryquickinvoice.com/invoice-guide.html"
@@ -100,172 +33,602 @@
     }
   }
   </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.75;
+      color: #263244;
+      background: #f5f7fb;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5eaf1;
+      padding: 18px 20px;
+    }
+
+    .nav {
+      max-width: 1050px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: #2563eb;
+      font-size: 23px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    nav a {
+      color: #344054;
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 14px;
+    }
+
+    nav a:hover,
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background: #eaf1ff;
+      padding: 52px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      max-width: 800px;
+      margin: 0 auto 14px;
+      color: #172554;
+      font-size: clamp(29px, 5vw, 43px);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #475569;
+      font-size: 17px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 32px auto;
+      padding: 0 18px;
+    }
+
+    article,
+    .contents,
+    .callout {
+      background: #ffffff;
+      border: 1px solid #e5eaf1;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin-top: 32px;
+      margin-bottom: 10px;
+      color: #172554;
+      line-height: 1.35;
+      font-size: 25px;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    h3 {
+      color: #1e3a8a;
+      margin-top: 23px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin: 12px 0;
+    }
+
+    a {
+      color: #2563eb;
+    }
+
+    .contents ul {
+      padding-left: 22px;
+      margin-bottom: 0;
+    }
+
+    .contents li {
+      margin: 5px 0;
+    }
+
+    .callout {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .example {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+    }
+
+    .example th,
+    .example td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #e5eaf1;
+      text-align: left;
+    }
+
+    .example th:last-child,
+    .example td:last-child {
+      text-align: right;
+    }
+
+    .example th {
+      background: #f8fafc;
+    }
+
+    .total-row {
+      font-weight: 800;
+      color: #172554;
+      font-size: 17px;
+    }
+
+    .checklist li,
+    article li {
+      margin-bottom: 8px;
+    }
+
+    .cta {
+      display: inline-block;
+      background: #2563eb;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .cta:hover {
+      background: #1d4ed8;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e5eaf1;
+      padding: 25px 18px;
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    footer a {
+      margin: 0 7px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 15px;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 12px;
+        display: inline-block;
+      }
+
+      .hero {
+        padding: 38px 17px;
+      }
+
+      article,
+      .contents,
+      .callout {
+        padding: 18px;
+      }
+
+      .example th,
+      .example td {
+        padding: 10px 6px;
+        font-size: 14px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <nav>
-    <a class="brand" href="/">SwiftInvoice</a>
-    <a href="/">Free Invoice Generator</a>
-  </nav>
-</header>
+  <header>
+    <div class="nav">
+      <a class="brand" href="https://tryquickinvoice.com/">SwiftInvoice</a>
 
-<main>
+      <nav aria-label="Main navigation">
+        <a href="https://tryquickinvoice.com/">Invoice Generator</a>
+        <a href="#contents">Guide</a>
+      </nav>
+    </div>
+  </header>
+
   <section class="hero">
-    <p>INVOICE BASICS</p>
     <h1>How to Create a Professional Invoice</h1>
     <p>
-      An invoice records the products or services you have provided
-      and tells your customer how much they need to pay. A clear,
-      accurate invoice helps you keep organised records and makes
-      payment expectations easier to understand.
+      Learn what to include on an invoice, how to calculate the total,
+      how to set payment terms, and how to avoid common invoicing mistakes.
     </p>
-    <a class="button" href="/">Create Your Free Invoice</a>
   </section>
 
-  <article>
-    <h2>What should an invoice include?</h2>
-    <p>A professional invoice will usually include the following information:</p>
-    <ul>
-      <li>Your business name and contact details.</li>
-      <li>Your customer's name or business details.</li>
-      <li>A unique invoice number.</li>
-      <li>The invoice date and payment due date.</li>
-      <li>A clear description of each product or service.</li>
-      <li>Quantity, unit price and line totals.</li>
-      <li>Applicable taxes, discounts and the final amount due.</li>
-      <li>Payment instructions and any relevant payment terms.</li>
-    </ul>
+  <main class="container">
+    <nav class="contents" id="contents" aria-label="Article contents">
+      <h2>In This Guide</h2>
+      <ul>
+        <li><a href="#what-is-an-invoice">What is an invoice?</a></li>
+        <li><a href="#invoice-details">What information to include</a></li>
+        <li><a href="#create-invoice">How to create an invoice</a></li>
+        <li><a href="#example">Worked invoice example</a></li>
+        <li><a href="#payment-terms">Payment terms and due dates</a></li>
+        <li><a href="#mistakes">Common invoicing mistakes</a></li>
+        <li><a href="#checklist">Invoice checklist</a></li>
+        <li><a href="#faqs">Frequently asked questions</a></li>
+      </ul>
+    </nav>
+
+    <article>
+      <section id="what-is-an-invoice">
+        <h2>1. What Is an Invoice?</h2>
+
+        <p>
+          An invoice is a document a business or self-employed professional
+          sends to a customer to request payment for goods supplied or services
+          completed. It records what was provided, how much is owed, and when
+          payment should be made.
+        </p>
+
+        <p>
+          Clear invoices help customers understand charges and give both
+          parties a useful record of the transaction. They can also make it
+          easier to track outstanding payments and maintain business records.
+        </p>
+
+        <p>
+          An invoice is generally a request for payment. A receipt, by contrast,
+          usually confirms that payment has already been received.
+        </p>
+      </section>
+
+      <section id="invoice-details">
+        <h2>2. What Information Should an Invoice Include?</h2>
+
+        <p>A professional invoice will usually include the following details:</p>
+
+        <ul>
+          <li><strong>Your business details:</strong> business name, address, and appropriate contact information.</li>
+          <li><strong>Customer details:</strong> the customer's name or business name and relevant address.</li>
+          <li><strong>Invoice number:</strong> a unique reference that helps you identify and track the invoice.</li>
+          <li><strong>Invoice date:</strong> the date the invoice was issued.</li>
+          <li><strong>Due date:</strong> when payment is expected.</li>
+          <li><strong>Description:</strong> the products supplied or services provided.</li>
+          <li><strong>Quantities and prices:</strong> the number of units or hours and their rates.</li>
+          <li><strong>Subtotal:</strong> the amount before any applicable discount or tax.</li>
+          <li><strong>Discounts and taxes:</strong> clearly identified amounts where applicable.</li>
+          <li><strong>Total due:</strong> the final amount the customer needs to pay.</li>
+          <li><strong>Payment instructions:</strong> accepted payment methods and any relevant reference.</li>
+        </ul>
+
+        <p>
+          Requirements vary by country, business type, and transaction.
+          For example, registered businesses may need to include tax registration
+          details and specific tax information. Check the rules that apply to
+          your business and customer.
+        </p>
+      </section>
+
+      <section id="create-invoice">
+        <h2>3. How to Create an Invoice Step by Step</h2>
+
+        <h3>Step 1: Enter your details</h3>
+        <p>
+          Add the correct business name and contact information. Use the details
+          required by the regulations that apply to your business.
+        </p>
+
+        <h3>Step 2: Add your customer's details</h3>
+        <p>
+          Check the customer's name and billing information carefully. Incorrect
+          details can cause confusion or delay payment.
+        </p>
+
+        <h3>Step 3: Describe the work or products</h3>
+        <p>
+          List each product or service separately where practical. Include
+          quantities, hours, unit prices, or other details that explain the charge.
+        </p>
+
+        <h3>Step 4: Calculate the subtotal</h3>
+        <p>
+          Multiply each quantity by its unit price and add the line amounts
+          together. Check the arithmetic before applying discounts or taxes.
+        </p>
+
+        <h3>Step 5: Apply discounts and applicable taxes</h3>
+        <p>
+          Show discounts and taxes clearly rather than hiding them inside an
+          unexplained total. Tax rates and calculation rules depend on the
+          relevant jurisdiction and transaction.
+        </p>
+
+        <h3>Step 6: Set payment terms</h3>
+        <p>
+          State the due date and explain how the customer can pay. Make sure
+          the terms are agreed and consistent with any contract or applicable law.
+        </p>
+
+        <h3>Step 7: Review and send</h3>
+        <p>
+          Check the invoice number, customer details, dates, descriptions,
+          calculations, and payment instructions. Save a copy for your records.
+        </p>
+
+        <div class="callout">
+          <strong>Save time with SwiftInvoice.</strong>
+          You can use our free
+          <a href="https://tryquickinvoice.com/">online invoice generator</a>
+          to prepare an invoice, review its details, and print or save it as a PDF.
+        </div>
+      </section>
+
+      <section id="example">
+        <h2>4. Worked Invoice Example</h2>
+
+        <p>
+          The following fictional example demonstrates how a subtotal,
+          discount, and illustrative tax amount can be calculated.
+          It is for explanation only, not tax advice.
+        </p>
+
+        <table class="example">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Consulting service</td>
+              <td>£100.00</td>
+            </tr>
+            <tr>
+              <td>Additional work</td>
+              <td>£50.00</td>
+            </tr>
+            <tr>
+              <td><strong>Subtotal</strong></td>
+              <td>£150.00</td>
+            </tr>
+            <tr>
+              <td>Discount (10% of £150)</td>
+              <td>−£15.00</td>
+            </tr>
+            <tr>
+              <td>Amount after discount</td>
+              <td>£135.00</td>
+            </tr>
+            <tr>
+              <td>Illustrative tax (20% of £135)</td>
+              <td>£27.00</td>
+            </tr>
+            <tr class="total-row">
+              <td>Total due</td>
+              <td>£162.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><strong>Calculation:</strong></p>
+        <ul>
+          <li>Subtotal: £100 + £50 = £150</li>
+          <li>Discount: £150 × 10% = £15</li>
+          <li>After discount: £150 − £15 = £135</li>
+          <li>Illustrative tax: £135 × 20% = £27</li>
+          <li>Total: £135 + £27 = £162</li>
+        </ul>
+
+        <p>
+          The tax rate and order of calculations used in a real invoice must
+          follow the applicable tax rules. Do not charge tax unless you are
+          entitled or required to do so under the rules that apply to you.
+        </p>
+      </section>
+
+      <section id="payment-terms">
+        <h2>5. Payment Terms and Due Dates</h2>
+
+        <p>
+          Payment terms tell the customer when and how payment is expected.
+          Common arrangements include payment immediately on receipt, within
+          7 days, within 14 days, or within 30 days.
+        </p>
+
+        <p>
+          These are examples, not universal rules. Agree the payment period
+          with your customer and check any contractual or legal requirements.
+        </p>
+
+        <p>To make payment easier:</p>
+
+        <ul>
+          <li>Display the due date clearly.</li>
+          <li>Provide accurate payment instructions.</li>
+          <li>Include the invoice number as a payment reference if useful.</li>
+          <li>Keep a record of invoices sent and payments received.</li>
+          <li>Follow up politely on overdue invoices in line with your agreed terms.</li>
+        </ul>
+      </section>
+
+      <section id="mistakes">
+        <h2>6. Common Invoicing Mistakes to Avoid</h2>
+
+        <h3>Incorrect calculations</h3>
+        <p>
+          A small arithmetic error can lead to an incorrect amount being charged.
+          Check quantities, unit prices, discounts, taxes, and the final total.
+        </p>
+
+        <h3>Missing invoice numbers</h3>
+        <p>
+          A consistent numbering system helps you locate documents and track
+          payments. Avoid accidentally reusing an invoice number.
+        </p>
+
+        <h3>Unclear descriptions</h3>
+        <p>
+          A vague description can leave the customer unsure what they are paying
+          for. Use clear descriptions that reflect the goods or services supplied.
+        </p>
+
+        <h3>Missing due dates</h3>
+        <p>
+          If the payment deadline is unclear, customers may not know when payment
+          is expected. State the agreed due date.
+        </p>
+
+        <h3>Unclear tax treatment</h3>
+        <p>
+          Tax rules differ between countries and transactions. Check whether
+          registration, tax collection, or specific invoice wording is required
+          before issuing an invoice.
+        </p>
+
+        <h3>Not keeping copies</h3>
+        <p>
+          Keep copies of invoices and related records securely for the retention
+          period required by the rules that apply to your business.
+        </p>
+      </section>
+
+      <section id="checklist">
+        <h2>7. Invoice Checklist Before Sending</h2>
+
+        <p>Use this checklist before sending an invoice to a customer:</p>
+
+        <ul class="checklist">
+          <li>Business and customer details are correct.</li>
+          <li>The invoice number is unique and easy to identify.</li>
+          <li>The issue date and due date are correct.</li>
+          <li>Descriptions, quantities, and unit prices are accurate.</li>
+          <li>Subtotal and discount calculations are correct.</li>
+          <li>Tax is handled according to applicable rules.</li>
+          <li>The total due is clear.</li>
+          <li>Payment instructions are complete.</li>
+          <li>A copy has been saved for your records.</li>
+        </ul>
+
+        <p>
+          When you're ready, open the
+          <a href="https://tryquickinvoice.com/">SwiftInvoice generator</a>
+          to prepare your invoice.
+        </p>
+
+        <a class="cta" href="https://tryquickinvoice.com/">Create an Invoice</a>
+      </section>
+
+      <section id="faqs">
+        <h2>8. Frequently Asked Questions</h2>
+
+        <h3>Can I create an invoice for free?</h3>
+        <p>
+          Yes. You can use a free invoice generator to prepare a professional
+          invoice without paying for dedicated invoicing software. Check the
+          features and limitations of the tool you choose.
+        </p>
+
+        <h3>Can I save an invoice as a PDF?</h3>
+        <p>
+          Yes. A browser's print function can often save a document as a PDF.
+          Review the print preview to make sure the invoice fits the page and
+          all important details are visible.
+        </p>
+
+        <h3>Does an invoice need a unique number?</h3>
+        <p>
+          A unique invoice reference is a useful way to identify, organise,
+          and track invoices. Specific legal requirements depend on your location
+          and business circumstances.
+        </p>
+
+        <h3>What is the difference between an invoice and a receipt?</h3>
+        <p>
+          An invoice generally requests payment. A receipt generally confirms
+          that payment has been made. Keep the appropriate record for each
+          transaction.
+        </p>
+
+        <h3>Do I need to charge tax on an invoice?</h3>
+        <p>
+          Not necessarily. Whether you must charge tax depends on your location,
+          registration status, transaction, and applicable rules. Check official
+          guidance or consult a qualified tax professional when needed.
+        </p>
+
+        <h3>Can I create invoices on my phone?</h3>
+        <p>
+          Yes. You can use an online invoice generator in a compatible mobile
+          browser. Review the final document before printing, saving, or sending it.
+        </p>
+
+        <h3>Is this guide tax or legal advice?</h3>
+        <p>
+          No. This guide provides general educational information. Requirements
+          vary by jurisdiction, and you should verify the rules that apply to
+          your particular business and transaction.
+        </p>
+      </section>
+
+      <div class="callout">
+        <h2>Ready to Create Your Invoice?</h2>
+        <p>
+          SwiftInvoice helps you prepare a clear invoice online. Enter the
+          relevant details, review your calculations, and print or save the
+          finished document.
+        </p>
+        <a class="cta" href="https://tryquickinvoice.com/">Open SwiftInvoice</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    <p>© <span id="year">2026</span> SwiftInvoice. All rights reserved.</p>
     <p>
-      Requirements differ by country, business type and transaction.
-      Check the invoicing and tax rules that apply to your situation.
+      <a href="https://tryquickinvoice.com/">Home</a>
+      <a href="https://tryquickinvoice.com/#about">About</a>
+      <a href="https://tryquickinvoice.com/#contact">Contact</a>
+      <a href="https://tryquickinvoice.com/#privacy">Privacy</a>
+      <a href="https://tryquickinvoice.com/#terms">Terms</a>
     </p>
+    <p>Free online tools to help simplify invoicing.</p>
+  </footer>
 
-    <h2>How to create an invoice in six steps</h2>
-
-    <h3>1. Add your business details</h3>
-    <p>
-      Start with the name and contact information your customer needs
-      to identify your business. Include any additional details required
-      by the rules in your country.
-    </p>
-
-    <h3>2. Enter your customer's details</h3>
-    <p>
-      Use the correct customer or company name and any required billing
-      information. Check spelling and addresses before sending the invoice.
-    </p>
-
-    <h3>3. Give the invoice a unique number</h3>
-    <p>
-      Assign each invoice a number that helps you find it later.
-      A consistent numbering system makes record keeping easier.
-      Avoid accidentally reusing an existing invoice number.
-    </p>
-
-    <h3>4. Describe your products or services</h3>
-    <p>
-      List each item separately and describe the work or product clearly.
-      Add the quantity and price so the customer can understand the charges.
-    </p>
-
-    <h3>5. Check taxes, discounts and totals</h3>
-    <p>
-      Calculate the subtotal, apply any appropriate discount, and include
-      the correct tax treatment for the transaction. Tax rules vary, so
-      confirm the applicable rate and calculation method before issuing
-      the invoice.
-    </p>
-
-    <h3>6. Set payment terms and save the invoice</h3>
-    <p>
-      State when payment is due and include suitable payment instructions.
-      Review every figure, then save a copy for your records and provide
-      the invoice to your customer.
-    </p>
-
-    <div class="tip">
-      <strong>Helpful tip:</strong> Before sending an invoice, double-check
-      the customer details, invoice number, due date, calculations and
-      payment instructions.
-    </div>
-
-    <h2>How do you calculate an invoice total?</h2>
-    <p>A basic invoice calculation looks like this:</p>
-    <ul>
-      <li>Line total = quantity × unit price.</li>
-      <li>Subtotal = the sum of all line totals.</li>
-      <li>Tax = the taxable amount × the applicable tax rate.</li>
-      <li>Final total = subtotal − discount + applicable tax.</li>
-    </ul>
-    <p>
-      For example, three items costing £20 each give a subtotal of £60.
-      If a 10% tax rate applies to the full £60 and there is no discount,
-      tax is £6 and the total is £66. This is an illustration only;
-      actual tax treatment depends on the transaction and local rules.
-    </p>
-
-    <h2>What is the difference between an invoice and a receipt?</h2>
-    <p>
-      An invoice requests payment for goods or services. A receipt
-      generally confirms that payment has been made. Keep both when
-      appropriate, as they serve different purposes in your records.
-    </p>
-
-    <h2>Can you create an invoice for free?</h2>
-    <p>
-      Yes. SwiftInvoice provides a free online invoice generator.
-      You can enter business and customer details, add items, calculate
-      totals, print or save your invoice as a PDF, and export invoice data.
-    </p>
-    <p>
-      Open the generator, enter the relevant information, review the
-      calculated totals and save your finished invoice. Always check the
-      PDF before sharing it.
-    </p>
-
-    <h2>Frequently asked questions</h2>
-
-    <h3>Can I save an invoice as a PDF?</h3>
-    <p>
-      Yes. Use the print or save-as-PDF option in SwiftInvoice, then
-      review the resulting document to make sure all details are visible.
-    </p>
-
-    <h3>Do I need to charge tax on every invoice?</h3>
-    <p>
-      Not necessarily. Whether you must charge tax depends on your
-      location, registration status, the customer and the transaction.
-      Consult your local tax authority or a qualified adviser if unsure.
-    </p>
-
-    <h3>When should an invoice be paid?</h3>
-    <p>
-      The due date and payment terms should be stated clearly on the
-      invoice. Agree on suitable terms with your customer and follow
-      any applicable legal requirements.
-    </p>
-
-    <h3>Should I keep copies of invoices?</h3>
-    <p>
-      Keeping organised copies helps with bookkeeping, payment tracking
-      and tax records. Retention periods and requirements vary by country.
-    </p>
-  </article>
-
-  <section class="cta">
-    <h2>Ready to create your invoice?</h2>
-    <p>
-      Use SwiftInvoice to prepare an invoice online without installing
-      software.
-    </p>
-    <a class="button" href="/">Open the Free Invoice Generator</a>
-  </section>
-</main>
-
-<footer>
-  <p>© 2026 SwiftInvoice. Check local requirements before issuing invoices.</p>
-  <p><a href="/">Home</a></p>
-</footer>
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
 </body>
 </html>
