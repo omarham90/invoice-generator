@@ -6,279 +6,827 @@
   <meta name="google-site-verification" content="44cz0ZlLcHilm3VGh6odK35fZZFZTTZf1xvIUgXrd1E">
 
   <title>SwiftInvoice — Free Online Invoice Generator</title>
-  <meta name="description" content="Create professional invoices online for free with SwiftInvoice. Calculate totals, add tax, print or save invoices as PDF, and export invoice data.">
+  <meta name="description" content="Create professional invoices online for free. Calculate totals, discounts and tax, print or save invoices as PDF, and export invoice data with SwiftInvoice.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tryquickinvoice.com/">
 
   <meta property="og:title" content="SwiftInvoice — Free Invoice Generator">
-  <meta property="og:description" content="Create, print and download professional invoices online for free.">
+  <meta property="og:description" content="Create, calculate, print and save professional invoices online for free.">
   <meta property="og:url" content="https://tryquickinvoice.com/">
   <meta property="og:type" content="website">
+  <meta name="theme-color" content="#4f46e5">
 
-  <!-- Existing AdSense loader. Ad serving is controlled by Google. -->
+  <!-- Keep the existing AdSense loader. Do not add fake ad placements. -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2187249652252062" crossorigin="anonymous"></script>
 
   <style>
     :root {
-      --primary:#3157d5;
-      --primary-dark:#2444b5;
-      --text:#172033;
-      --muted:#64748b;
-      --border:#e2e8f0;
-      --background:#f5f7fb;
-      --white:#fff;
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --purple: #7c3aed;
+      --teal: #0f766e;
+      --text: #172033;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --background: #f5f7ff;
+      --white: #ffffff;
+      --success-bg: #ecfdf5;
+      --success-text: #047857;
+      --danger-bg: #fff1f2;
+      --danger-text: #be123c;
+      --shadow: 0 12px 35px rgba(39, 45, 90, 0.07);
     }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
     body {
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      color:var(--text);
-      background:var(--background);
-      line-height:1.6;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--background);
+      line-height: 1.65;
     }
-    a { color:var(--primary); }
-    header {
-      background:var(--white);
-      border-bottom:1px solid var(--border);
-      position:sticky;
-      top:0;
-      z-index:10;
+
+    a {
+      color: var(--primary);
     }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #a5b4fc;
+      outline-offset: 3px;
+    }
+
+    .site-header {
+      background: rgba(255, 255, 255, 0.97);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
     .nav {
-      max-width:1150px;
-      margin:auto;
-      padding:14px 20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      flex-wrap:wrap;
+      max-width: 1180px;
+      margin: auto;
+      padding: 13px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
     }
+
     .logo {
-      font-size:24px;
-      font-weight:800;
-      color:var(--primary);
-      text-decoration:none;
-      letter-spacing:-1px;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      text-decoration: none;
+      color: var(--primary);
     }
-    nav { display:flex; gap:15px; flex-wrap:wrap; }
+
+    .logo span {
+      color: var(--purple);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      flex-wrap: wrap;
+    }
+
     nav a {
-      text-decoration:none;
-      color:var(--text);
-      font-size:14px;
-      font-weight:600;
+      text-decoration: none;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 700;
     }
-    nav a:hover { color:var(--primary); }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
     .hero {
-      text-align:center;
-      padding:48px 20px 28px;
-      background:linear-gradient(135deg,#eef2ff,#fff);
+      position: relative;
+      overflow: hidden;
+      padding: 64px 20px 58px;
+      text-align: center;
+      background: linear-gradient(130deg, #e0e7ff 0%, #f5f3ff 48%, #ccfbf1 100%);
     }
+
+    .hero-inner {
+      max-width: 850px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: #ffffffc9;
+      border: 1px solid #c7d2fe;
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 17px;
+    }
+
     .hero h1 {
-      font-size:clamp(30px,5vw,46px);
-      line-height:1.15;
-      margin:0 0 15px;
-      letter-spacing:-1.5px;
+      font-size: clamp(34px, 5.5vw, 54px);
+      line-height: 1.12;
+      letter-spacing: -1.8px;
+      margin: 0 0 18px;
+      color: #1e1b4b;
     }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
     .hero p {
-      color:var(--muted);
-      max-width:680px;
-      margin:0 auto;
-      font-size:17px;
+      color: #475569;
+      font-size: 17px;
+      max-width: 700px;
+      margin: 0 auto;
     }
-    .trust {
-      display:flex;
-      justify-content:center;
-      gap:18px;
-      flex-wrap:wrap;
-      margin-top:20px;
-      font-size:14px;
-      color:#475569;
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
     }
-    .container {
-      max-width:1150px;
-      padding:24px 20px;
-      margin:auto;
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 18px;
+      background: var(--primary);
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
     }
+
+    .button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .button-light {
+      color: var(--primary-dark);
+      background: white;
+      border: 1px solid #c7d2fe;
+    }
+
+    .button-light:hover {
+      background: var(--primary-light);
+    }
+
+    .button-secondary {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .button-secondary:hover {
+      background: #e0e7ff;
+    }
+
+    .button-danger {
+      background: var(--danger-bg);
+      color: var(--danger-text);
+    }
+
+    .button-danger:hover {
+      background: #ffe4e6;
+    }
+
+    .button-small {
+      padding: 8px 11px;
+      font-size: 12px;
+    }
+
+    .hero-trust {
+      display: flex;
+      justify-content: center;
+      gap: 12px 22px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .page-container {
+      max-width: 1180px;
+      padding: 28px 20px;
+      margin: auto;
+    }
+
     .card {
-      background:var(--white);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:24px;
-      margin-bottom:22px;
-      box-shadow:0 4px 18px rgba(15,23,42,.035);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 27px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
     }
-    h2 { margin-top:0; line-height:1.3; }
-    h3 { margin-bottom:8px; }
-    .section-intro { color:var(--muted); margin-top:-4px; }
+
+    .section-heading {
+      margin: 0 0 8px;
+      color: #1e1b4b;
+      font-size: clamp(23px, 3vw, 30px);
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      margin: 0 0 23px;
+    }
+
+    .subheading {
+      margin: 0 0 13px;
+      font-size: 17px;
+      color: #312e81;
+    }
+
+    .generator-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .generator-heading .section-heading {
+      margin-bottom: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: var(--success-bg);
+      color: var(--success-text);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .form-section {
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 19px;
+      margin: 22px 0;
+      background: #fcfcff;
+    }
+
+    .form-section h3 {
+      margin: 0 0 16px;
+      color: #312e81;
+      font-size: 17px;
+    }
+
     .grid {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
     }
-    .field { margin-bottom:15px; }
+
+    .field {
+      min-width: 0;
+      margin-bottom: 14px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
     label {
-      display:block;
-      font-weight:700;
-      font-size:13px;
-      margin-bottom:6px;
+      display: block;
+      margin-bottom: 6px;
+      color: #334155;
+      font-size: 13px;
+      font-weight: 800;
     }
-    input,textarea,select {
-      width:100%;
-      padding:11px 12px;
-      border:1px solid #cbd5e1;
-      border-radius:8px;
-      font:inherit;
-      color:var(--text);
-      background:#fff;
-      min-width:0;
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      min-width: 0;
+      padding: 11px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font: inherit;
+      font-size: 14px;
+      color: var(--text);
+      background: white;
     }
-    input:focus,textarea:focus,select:focus {
-      outline:2px solid #c7d2fe;
-      border-color:var(--primary);
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid #c7d2fe;
+      border-color: var(--primary);
     }
-    textarea { min-height:85px; resize:vertical; }
-    .table-wrap { overflow-x:auto; }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .help-text {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 6px 0 0;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
     table {
-      width:100%;
-      border-collapse:collapse;
-      margin:12px 0;
-      min-width:560px;
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+      background: white;
     }
-    th,td {
-      border-bottom:1px solid var(--border);
-      padding:10px 8px;
-      text-align:left;
-      vertical-align:middle;
+
+    th,
+    td {
+      padding: 11px 9px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: middle;
     }
-    th { background:#f8fafc; font-size:13px; }
-    td input { min-width:75px; }
-    .item-description { min-width:160px; }
+
+    th {
+      color: #3730a3;
+      background: #eef2ff;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    td input {
+      padding: 9px;
+      min-width: 70px;
+    }
+
+    td .item-description {
+      min-width: 170px;
+    }
+
     .button-row {
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
     }
-    button,.button {
-      display:inline-block;
-      border:0;
-      border-radius:8px;
-      padding:11px 16px;
-      background:var(--primary);
-      color:#fff;
-      font-size:14px;
-      font-weight:700;
-      cursor:pointer;
-      text-decoration:none;
+
+    .totals {
+      max-width: 410px;
+      margin: 22px 0 0 auto;
+      padding: 17px;
+      border: 1px solid #c7d2fe;
+      border-radius: 12px;
+      background: #f5f3ff;
     }
-    button:hover,.button:hover { background:var(--primary-dark); }
-    .secondary { color:var(--text); background:#e9eef8; }
-    .secondary:hover { background:#dce4f3; }
-    .danger { background:#fee2e2; color:#991b1b; padding:7px 10px; }
-    .danger:hover { background:#fecaca; }
-    .totals { max-width:370px; margin-left:auto; padding-top:12px; }
+
     .total-line {
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding:7px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 0;
+      color: #475569;
+      font-size: 14px;
     }
+
+    .total-line strong {
+      color: var(--text);
+      text-align: right;
+    }
+
     .grand-total {
-      border-top:2px solid var(--text);
-      margin-top:5px;
-      padding-top:12px;
-      font-size:21px;
-      font-weight:800;
+      border-top: 2px solid #c4b5fd;
+      margin-top: 8px;
+      padding-top: 14px;
+      font-size: 20px;
+      font-weight: 900;
+      color: #312e81;
     }
+
+    .grand-total strong {
+      color: var(--primary-dark);
+      font-size: 22px;
+    }
+
     .notice {
-      padding:12px 14px;
-      border-radius:8px;
-      background:#eff6ff;
-      color:#1e40af;
-      font-size:14px;
-      margin-top:15px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: #ecfeff;
+      border: 1px solid #a5f3fc;
+      color: #155e75;
+      font-size: 13px;
+      margin-top: 18px;
     }
+
+    .status {
+      min-height: 22px;
+      color: var(--success-text);
+      font-size: 13px;
+      font-weight: 700;
+      margin: 12px 0 0;
+    }
+
+    .status.error {
+      color: var(--danger-text);
+    }
+
     .features {
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
     }
+
     .feature {
-      background:#f8fafc;
-      border:1px solid var(--border);
-      border-radius:10px;
-      padding:18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 20px;
+      background: linear-gradient(145deg, #ffffff, #f8faff);
     }
-    .feature h3 { margin-top:0; }
-    .content-section { scroll-margin-top:100px; }
-    .content-section p,.content-section li { color:#475569; }
-    .content-section h3 { margin-top:24px; }
-    .faq-item { padding:14px 0; border-bottom:1px solid var(--border); }
-    .faq-item:last-child { border-bottom:0; }
-    .faq-item h3 { font-size:16px; }
+
+    .feature-icon {
+      display: inline-flex;
+      width: 43px;
+      height: 43px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: #e0e7ff;
+      color: #4338ca;
+      font-size: 21px;
+      margin-bottom: 12px;
+    }
+
+    .feature:nth-child(2) .feature-icon {
+      background: #ccfbf1;
+      color: #0f766e;
+    }
+
+    .feature:nth-child(3) .feature-icon {
+      background: #f3e8ff;
+      color: #7e22ce;
+    }
+
+    .feature h3 {
+      margin: 0 0 8px;
+      color: #1e1b4b;
+      font-size: 17px;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .content-section {
+      scroll-margin-top: 100px;
+    }
+
+    .content-section p,
+    .content-section li {
+      color: #475569;
+    }
+
+    .content-section h3 {
+      margin-top: 23px;
+      margin-bottom: 7px;
+      color: #312e81;
+      font-size: 17px;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
     .guide-link {
-      display:block;
-      padding:16px;
-      border:1px solid var(--border);
-      border-radius:10px;
-      text-decoration:none;
-      margin:14px 0;
-      background:#f8fafc;
+      display: block;
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: linear-gradient(145deg, #fff, #f8faff);
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.15s, transform 0.15s;
     }
-    .guide-link strong { display:block; margin-bottom:4px; }
-    .guide-link:hover { border-color:var(--primary); background:#eff6ff; }
+
+    .guide-link:hover {
+      border-color: #a5b4fc;
+      transform: translateY(-2px);
+    }
+
+    .guide-link strong {
+      display: block;
+      color: #3730a3;
+      margin-bottom: 7px;
+    }
+
+    .guide-link span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .calculation-box {
+      padding: 18px;
+      border-radius: 12px;
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      margin: 15px 0;
+    }
+
+    .calculation-box p {
+      margin: 5px 0;
+      color: #115e59;
+    }
+
+    .faq-item {
+      padding: 17px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .faq-item h3 {
+      margin: 0 0 7px;
+      color: #312e81;
+      font-size: 16px;
+    }
+
+    .faq-item p {
+      margin: 0;
+    }
+
+    .callout {
+      padding: 25px;
+      border-radius: 14px;
+      background: linear-gradient(120deg, #eef2ff, #f5f3ff, #ecfeff);
+      border: 1px solid #c7d2fe;
+      margin-top: 22px;
+    }
+
+    .callout h2 {
+      margin-top: 0;
+      color: #312e81;
+    }
+
+    .callout p {
+      color: #475569;
+    }
+
+    .policy-card {
+      border-top: 4px solid #818cf8;
+    }
+
+    .policy-card h3 {
+      margin-top: 23px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
     footer {
-      background:#111827;
-      color:#e5e7eb;
-      padding:28px 20px;
-      text-align:center;
-      margin-top:25px;
+      background: #171738;
+      color: #e0e7ff;
+      padding: 35px 20px;
+      text-align: center;
+      margin-top: 25px;
     }
-    footer p { margin:8px 0; }
+
+    footer p {
+      margin: 9px 0;
+    }
+
     footer a {
-      color:#c7d2fe;
-      margin:0 7px;
-      text-decoration:none;
+      display: inline-block;
+      color: #c7d2fe;
+      text-decoration: none;
+      margin: 5px 9px;
+      font-size: 13px;
     }
-    footer a:hover { text-decoration:underline; }
-    .small { font-size:13px; color:var(--muted); }
-    @media(max-width:700px) {
-      .grid,.features { grid-template-columns:1fr; }
-      .card { padding:17px; }
-      .nav { justify-content:center; }
-      nav { justify-content:center; }
-      .hero { padding-top:35px; }
+
+    footer a:hover {
+      color: white;
+      text-decoration: underline;
     }
-    @media print {
-      body { background:#fff; }
-      header,.hero,footer,.no-print,
-      #features,#guides,#faq,#about,#contact,#privacy,#terms,
-      #ad-top,#ad-bottom { display:none!important; }
-      .container { max-width:none; padding:0; }
-      .card { border:0; box-shadow:none; padding:0; }
-      input,textarea,select {
-        border:0;
-        padding:0;
-        appearance:none;
-        color:#000;
-        background:transparent;
+
+    .footer-brand {
+      color: white;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        justify-content: center;
       }
-      .item-description { min-width:0; }
-      table { min-width:0; }
-      th,td { padding:6px 4px; }
-      .totals { break-inside:avoid; }
+
+      nav {
+        justify-content: center;
+        gap: 10px 14px;
+      }
+
+      .hero {
+        padding: 45px 18px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1px;
+      }
+
+      .grid,
+      .features,
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 19px;
+      }
+
+      .form-section {
+        padding: 14px;
+      }
+
+      .page-container {
+        padding: 20px 12px;
+      }
+
+      .hero-trust {
+        gap: 9px 13px;
+      }
+
+      .button-row .button {
+        flex: 1 1 145px;
+      }
+
+      .totals {
+        max-width: none;
+      }
+    }
+
+    @media print {
+      @page {
+        size: auto;
+        margin: 12mm;
+      }
+
+      body {
+        background: white !important;
+        color: #000;
+        font-size: 11pt;
+      }
+
+      .site-header,
+      .hero,
+      footer,
+      .no-print,
+      #features,
+      #guides,
+      #example,
+      #faq,
+      #about,
+      #contact,
+      #privacy,
+      #terms,
+      #resources {
+        display: none !important;
+      }
+
+      .page-container {
+        max-width: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .card,
+      .form-section {
+        box-shadow: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: white;
+      }
+
+      #generator > .section-intro {
+        margin-bottom: 12px;
+      }
+
+      input,
+      textarea,
+      select {
+        border: 0;
+        padding: 2px 0;
+        color: #000;
+        background: transparent;
+        appearance: none;
+        font-size: 10pt;
+      }
+
+      textarea {
+        min-height: 30px;
+      }
+
+      .table-wrap {
+        overflow: visible;
+        border: 0;
+      }
+
+      table {
+        min-width: 0;
+        font-size: 9pt;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        color: #000;
+        border-bottom: 1px solid #bbb;
+      }
+
+      th {
+        background: #eee !important;
+      }
+
+      .totals {
+        background: white;
+        border: 1px solid #bbb;
+        max-width: 300px;
+      }
+
+      .grand-total {
+        border-top: 2px solid #000;
+      }
+
+      .notice,
+      #status {
+        display: none;
+      }
+
+      .form-section {
+        break-inside: avoid;
+      }
     }
   </style>
 </head>
 
 <body>
-<header>
+<header class="site-header">
   <div class="nav">
-    <a class="logo" href="#home">SwiftInvoice</a>
+    <a class="logo" href="#home">Swift<span>Invoice</span></a>
     <nav aria-label="Main navigation">
       <a href="#generator">Invoice Generator</a>
+      <a href="#features">Features</a>
       <a href="#guides">Guides</a>
       <a href="invoice-guide.html">Invoice Guide</a>
       <a href="#faq">FAQ</a>
@@ -290,274 +838,454 @@
 
 <main id="home">
   <section class="hero">
-    <h1>Free Online Invoice Generator</h1>
-    <p>Create professional invoices in minutes. Add your business details, list your services, calculate tax and totals, then print or save your invoice as a PDF.</p>
-    <div class="trust">
-      <span>✓ Free to use</span>
-      <span>✓ No account required</span>
-      <span>✓ Works in your browser</span>
+    <div class="hero-inner">
+      <span class="eyebrow">Simple invoicing, made easier</span>
+      <h1>Create professional invoices <span>for free</span></h1>
+      <p>
+        Prepare clear invoices for your business in minutes. Add your details,
+        list your services, calculate discounts and tax, then print or save
+        your invoice as a PDF.
+      </p>
+
+      <div class="hero-actions">
+        <a class="button" href="#generator">✦ Create an Invoice</a>
+        <a class="button button-light" href="invoice-guide.html">Read the Invoice Guide</a>
+      </div>
+
+      <div class="hero-trust">
+        <span>✓ No account required</span>
+        <span>✓ Works in your browser</span>
+        <span>✓ PDF printing and CSV export</span>
+      </div>
     </div>
   </section>
 
-  <div class="container">
-    <div id="ad-top" class="card no-print" aria-label="Advertisement">
-      <p class="small">Advertisement</p>
-      <!-- Placeholder only. Configure real ads through AdSense when appropriate. -->
-    </div>
+  <div class="page-container">
 
     <section id="generator" class="card content-section">
-      <h2>Create Your Invoice</h2>
-      <p class="section-intro">Enter your details below. Your invoice is generated in your browser.</p>
+      <div class="generator-heading">
+        <h2 class="section-heading">Invoice Workspace</h2>
+        <span class="badge">Free to use</span>
+      </div>
+      <p class="section-intro">
+        Fill in the details below. Review the totals before printing or sending
+        the invoice to your customer.
+      </p>
 
-      <div class="grid">
-        <div>
-          <h3>From</h3>
-          <div class="field">
-            <label for="businessName">Business or your name</label>
-            <input id="businessName" placeholder="Your business name">
+      <div class="form-section">
+        <div class="grid">
+          <div>
+            <h3>01 · Your Business</h3>
+            <div class="field">
+              <label for="businessName">Business or your name</label>
+              <input id="businessName" autocomplete="organization" placeholder="Your business name">
+            </div>
+            <div class="field">
+              <label for="businessEmail">Business email</label>
+              <input id="businessEmail" type="email" autocomplete="email" placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="businessAddress">Business address</label>
+              <textarea id="businessAddress" autocomplete="street-address" placeholder="Street, city, postcode"></textarea>
+            </div>
           </div>
-          <div class="field">
-            <label for="businessEmail">Business email</label>
-            <input id="businessEmail" type="email" placeholder="you@example.com">
-          </div>
-          <div class="field">
-            <label for="businessAddress">Business address</label>
-            <textarea id="businessAddress" placeholder="Street, city, postcode"></textarea>
-          </div>
-        </div>
-        <div>
-          <h3>Bill To</h3>
-          <div class="field">
-            <label for="clientName">Customer name</label>
-            <input id="clientName" placeholder="Customer or company name">
-          </div>
-          <div class="field">
-            <label for="clientEmail">Customer email</label>
-            <input id="clientEmail" type="email" placeholder="customer@example.com">
-          </div>
-          <div class="field">
-            <label for="clientAddress">Customer address</label>
-            <textarea id="clientAddress" placeholder="Customer address"></textarea>
+
+          <div>
+            <h3>02 · Customer Details</h3>
+            <div class="field">
+              <label for="clientName">Customer name</label>
+              <input id="clientName" placeholder="Customer or company name">
+            </div>
+            <div class="field">
+              <label for="clientEmail">Customer email</label>
+              <input id="clientEmail" type="email" placeholder="customer@example.com">
+            </div>
+            <div class="field">
+              <label for="clientAddress">Customer address</label>
+              <textarea id="clientAddress" placeholder="Customer address"></textarea>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="grid">
-        <div class="field">
-          <label for="invoiceNumber">Invoice number</label>
-          <input id="invoiceNumber" value="INV-001">
+      <div class="form-section">
+        <h3>03 · Invoice Information</h3>
+        <div class="grid">
+          <div class="field">
+            <label for="invoiceNumber">Invoice number</label>
+            <input id="invoiceNumber" value="INV-001" maxlength="80">
+          </div>
+          <div class="field">
+            <label for="currency">Currency</label>
+            <select id="currency">
+              <option value="GBP">GBP — British Pound (£)</option>
+              <option value="USD">USD — US Dollar ($)</option>
+              <option value="EUR">EUR — Euro (€)</option>
+              <option value="MAD">MAD — Moroccan Dirham</option>
+              <option value="CAD">CAD — Canadian Dollar</option>
+              <option value="AUD">AUD — Australian Dollar</option>
+              <option value="INR">INR — Indian Rupee</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="invoiceDate">Invoice date</label>
+            <input id="invoiceDate" type="date">
+          </div>
+          <div class="field">
+            <label for="dueDate">Payment due date</label>
+            <input id="dueDate" type="date">
+          </div>
         </div>
-        <div class="field">
-          <label for="currency">Currency</label>
-          <select id="currency">
-            <option value="GBP">GBP — British Pound (£)</option>
-            <option value="USD">USD — US Dollar ($)</option>
-            <option value="EUR">EUR — Euro (€)</option>
-            <option value="MAD">MAD — Moroccan Dirham</option>
-            <option value="CAD">CAD — Canadian Dollar</option>
-            <option value="AUD">AUD — Australian Dollar</option>
-            <option value="INR">INR — Indian Rupee</option>
-          </select>
+        <p class="help-text">Choose a unique invoice number and the payment deadline agreed with your customer.</p>
+      </div>
+
+      <div class="form-section">
+        <h3>04 · Products and Services</h3>
+        <p class="help-text">Add each product or service on a separate line. Enter non-negative quantities and prices.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit price</th>
+                <th>Line total</th>
+                <th class="no-print">Action</th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+          </table>
         </div>
-        <div class="field">
-          <label for="invoiceDate">Invoice date</label>
-          <input id="invoiceDate" type="date">
+
+        <div class="button-row no-print">
+          <button type="button" class="button button-secondary" id="addItem">+ Add Item</button>
         </div>
-        <div class="field">
-          <label for="dueDate">Due date</label>
-          <input id="dueDate" type="date">
+
+        <div class="grid" style="margin-top:22px">
+          <div class="field">
+            <label for="discount">Discount amount</label>
+            <input id="discount" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+            <p class="help-text">The discount is deducted from the subtotal.</p>
+          </div>
+          <div class="field">
+            <label for="taxRate">Tax rate (%)</label>
+            <input id="taxRate" type="number" min="0" max="100" step="0.01" value="0" inputmode="decimal">
+            <p class="help-text">Enter the rate applicable to your transaction.</p>
+          </div>
+        </div>
+
+        <div class="totals" aria-live="polite" aria-label="Invoice totals">
+          <div class="total-line">
+            <span>Subtotal</span>
+            <strong id="subtotal">£0.00</strong>
+          </div>
+          <div class="total-line">
+            <span>Discount</span>
+            <strong id="discountTotal">£0.00</strong>
+          </div>
+          <div class="total-line">
+            <span>Tax</span>
+            <strong id="taxTotal">£0.00</strong>
+          </div>
+          <div class="total-line grand-total">
+            <span>Total Due</span>
+            <strong id="grandTotal">£0.00</strong>
+          </div>
         </div>
       </div>
 
-      <h3>Items and Services</h3>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>Unit price</th>
-              <th>Amount</th>
-              <th class="no-print">Remove</th>
-            </tr>
-          </thead>
-          <tbody id="itemsBody"></tbody>
-        </table>
+      <div class="form-section">
+        <h3>05 · Notes and Payment Instructions</h3>
+        <div class="field">
+          <label for="notes">Additional notes</label>
+          <textarea id="notes" placeholder="Thank you for your business. Add payment instructions or agreed terms."></textarea>
+        </div>
       </div>
 
       <div class="button-row no-print">
-        <button type="button" id="addItem" class="secondary">+ Add Item</button>
+        <button type="button" class="button" id="printInvoice">Print / Save as PDF</button>
+        <button type="button" class="button button-secondary" id="downloadCsv">Export CSV</button>
+        <button type="button" class="button button-secondary" id="saveInvoice">Save in This Browser</button>
+        <button type="button" class="button button-secondary" id="loadInvoice">Load Saved Invoice</button>
+        <button type="button" class="button button-danger" id="clearInvoice">Clear Form</button>
       </div>
 
-      <div class="grid" style="margin-top:20px">
-        <div class="field">
-          <label for="taxRate">Tax rate (%)</label>
-          <input id="taxRate" type="number" min="0" max="100" step="0.01" value="0">
-        </div>
-        <div class="field">
-          <label for="discount">Discount amount</label>
-          <input id="discount" type="number" min="0" step="0.01" value="0">
-        </div>
+      <div class="notice">
+        <strong>Your data:</strong> Invoice details are processed in your browser.
+        The save feature stores your invoice in this browser on this device,
+        not in a SwiftInvoice online account. Anyone with access to the device
+        or browser profile may be able to access saved information. Avoid using
+        shared devices for confidential customer data.
       </div>
-
-      <div class="totals">
-        <div class="total-line"><span>Subtotal</span><strong id="subtotal">£0.00</strong></div>
-        <div class="total-line"><span>Discount</span><strong id="discountTotal">£0.00</strong></div>
-        <div class="total-line"><span>Tax</span><strong id="taxTotal">£0.00</strong></div>
-        <div class="total-line grand-total"><span>Total Due</span><span id="grandTotal">£0.00</span></div>
-      </div>
-
-      <div class="field" style="margin-top:22px">
-        <label for="notes">Notes and payment instructions</label>
-        <textarea id="notes" placeholder="Thank you for your business. Include payment instructions if needed."></textarea>
-      </div>
-
-      <div class="button-row no-print">
-        <button type="button" id="printInvoice">Print / Save as PDF</button>
-        <button type="button" id="downloadCsv" class="secondary">Export CSV</button>
-        <button type="button" id="saveInvoice" class="secondary">Save in This Browser</button>
-        <button type="button" id="loadInvoice" class="secondary">Load Saved Invoice</button>
-        <button type="button" id="clearInvoice" class="danger">Clear Form</button>
-      </div>
-
-      <p class="notice">Privacy note: invoice information is processed in your browser. Saving an invoice stores it in this browser on this device. Avoid using a shared device for confidential customer information.</p>
-      <p id="status" class="small" role="status" aria-live="polite"></p>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
     </section>
 
     <section id="features" class="card content-section">
-      <h2>Why Use SwiftInvoice?</h2>
+      <h2 class="section-heading">Tools to Simplify Invoicing</h2>
+      <p class="section-intro">Prepare, calculate and organise basic invoices from your browser.</p>
+
       <div class="features">
         <div class="feature">
-          <h3>Easy Invoice Creation</h3>
-          <p>Enter your business and customer details, add items and generate your invoice without complicated software.</p>
+          <div class="feature-icon" aria-hidden="true">✎</div>
+          <h3>Simple Invoice Creation</h3>
+          <p>Enter business and customer details, describe the work, and add quantities and prices without installing software.</p>
         </div>
         <div class="feature">
+          <div class="feature-icon" aria-hidden="true">∑</div>
           <h3>Automatic Calculations</h3>
-          <p>Calculate line totals, discounts, tax and the final amount due automatically.</p>
+          <p>Calculate line totals, apply a discount and estimate tax based on the rate you enter.</p>
         </div>
         <div class="feature">
-          <h3>Print or Save as PDF</h3>
-          <p>Use your browser's print function to print an invoice or save a PDF copy for your records.</p>
+          <div class="feature-icon" aria-hidden="true">⇩</div>
+          <h3>Print, PDF and CSV</h3>
+          <p>Print an invoice or save it as a PDF through your browser. Export item details and totals to a CSV file.</p>
         </div>
       </div>
     </section>
 
     <section id="guides" class="card content-section">
-      <h2>Invoice Guides</h2>
-      <p>Learn how to prepare invoices, understand invoice totals and keep better records.</p>
+      <h2 class="section-heading">Invoice Guides and Practical Advice</h2>
+      <p class="section-intro">Learn how to prepare invoices, check calculations and maintain clear business records.</p>
 
-      <a class="guide-link" href="invoice-guide.html">
-        <strong>How to Create a Professional Invoice</strong>
-        <span>Step-by-step instructions, invoice essentials, tax calculations and common questions.</span>
-      </a>
-
-      <h3>How to Create an Invoice</h3>
-      <p>Enter the seller's details, customer information, invoice number, invoice date and payment due date. Add a clear description of each product or service, along with the quantity and price. Check the calculated total before printing or saving the document.</p>
+      <div class="guide-grid">
+        <a class="guide-link" href="invoice-guide.html">
+          <strong>How to Create a Professional Invoice →</strong>
+          <span>Invoice essentials, a worked example, payment terms and common mistakes.</span>
+        </a>
+        <a class="guide-link" href="#example">
+          <strong>Understand an Invoice Calculation →</strong>
+          <span>Follow a worked example showing a subtotal, discount, tax and final amount.</span>
+        </a>
+      </div>
 
       <h3>What Should an Invoice Include?</h3>
-      <p>A typical invoice includes the seller's name and contact details, customer details, a unique invoice number, issue date, description of goods or services, quantities, prices, applicable taxes, total amount due and payment terms. Legal requirements vary by country and business type.</p>
+      <p>
+        A typical invoice identifies the seller and customer, gives a unique
+        invoice number, states the issue date and due date, describes the goods
+        or services, lists quantities and prices, and shows the total due.
+        Applicable tax details and payment instructions should also be included.
+        Exact requirements vary by country, business type and transaction.
+      </p>
+
+      <h3>How to Set Payment Terms</h3>
+      <p>
+        State the agreed payment deadline clearly. Depending on the agreement,
+        a business may request payment on receipt or within a specified number
+        of days. Make sure the terms match the contract and any applicable law.
+        Keep records of invoices sent and payments received.
+      </p>
 
       <h3>How to Save an Invoice as a PDF</h3>
-      <p>After completing your invoice, select “Print / Save as PDF”. In the print dialog, choose “Save as PDF” as the destination if your device supports it. Review the preview before saving.</p>
-
-      <h3>How to Calculate Invoice Tax</h3>
-      <p>Enter the applicable tax percentage in the tax field. SwiftInvoice calculates tax on the subtotal after the discount. Make sure the rate and calculation method are appropriate for your jurisdiction and business.</p>
+      <p>
+        Complete the invoice and select “Print / Save as PDF”. In the browser's
+        print window, choose “Save as PDF” if available, check the preview, and
+        save the file to a secure location. Print layouts may differ between devices.
+      </p>
 
       <h3>How to Keep Invoice Records</h3>
-      <p>Keep copies of invoices and supporting documents in a secure location. Record payments and outstanding balances, and follow the record-keeping rules that apply to your business.</p>
+      <p>
+        Store copies of issued invoices, supporting documents and payment records
+        securely. Browser storage is useful for a local draft, but it is not a
+        cloud backup. Keep separate records and follow the retention requirements
+        that apply to your business.
+      </p>
+    </section>
+
+    <section id="example" class="card content-section">
+      <h2 class="section-heading">Worked Invoice Calculation</h2>
+      <p class="section-intro">This fictional example shows how a discount and illustrative tax rate affect the final amount.</p>
+
+      <div class="calculation-box">
+        <p><strong>Service A:</strong> £100.00</p>
+        <p><strong>Service B:</strong> £50.00</p>
+        <p>Subtotal: £100 + £50 = <strong>£150.00</strong></p>
+        <p>Discount: 10% of £150 = <strong>£15.00</strong></p>
+        <p>Amount after discount: £150 − £15 = <strong>£135.00</strong></p>
+        <p>Illustrative tax: 20% of £135 = <strong>£27.00</strong></p>
+        <p><strong>Total: £135 + £27 = £162.00</strong></p>
+      </div>
+
+      <p>
+        This example is for arithmetic only. The tax rate, whether tax should
+        be charged, and the order of calculations must follow the rules for
+        your location and transaction. SwiftInvoice does not determine your
+        tax obligations or replace professional accounting advice.
+      </p>
+
+      <h3>Check the Numbers Before Sending</h3>
+      <ul>
+        <li>Confirm that every quantity and unit price is correct.</li>
+        <li>Check that the discount does not exceed the subtotal.</li>
+        <li>Use the appropriate tax rate and calculation method.</li>
+        <li>Verify the final amount and payment terms.</li>
+        <li>Keep a copy of the invoice for your records.</li>
+      </ul>
     </section>
 
     <section id="faq" class="card content-section">
-      <h2>Frequently Asked Questions</h2>
+      <h2 class="section-heading">Frequently Asked Questions</h2>
 
       <div class="faq-item">
         <h3>Is SwiftInvoice free?</h3>
-        <p>Yes. The invoice generator on this page is available to use for free. You do not need to create an account to generate an invoice.</p>
+        <p>The invoice generator on this page is free to use. You do not need to create an account to prepare an invoice.</p>
       </div>
+
       <div class="faq-item">
         <h3>Do I need to install software?</h3>
-        <p>No. You can use the generator in a modern web browser on a phone, tablet or computer.</p>
+        <p>No. You can use the generator in a modern browser on a compatible phone, tablet or computer.</p>
       </div>
+
       <div class="faq-item">
-        <h3>Can I download my invoice?</h3>
-        <p>Yes. Use the print option and choose Save as PDF where available. You can also export invoice item details to a CSV file.</p>
+        <h3>Can I save my invoice as a PDF?</h3>
+        <p>Yes. Select the print option and choose Save as PDF in your browser's print dialog where supported.</p>
       </div>
+
       <div class="faq-item">
-        <h3>Does SwiftInvoice store my invoice on its servers?</h3>
-        <p>This page processes invoice information in your browser. The optional save feature stores information in your browser's local storage on your device. It does not create an online account or cloud backup.</p>
+        <h3>Can I export invoice data?</h3>
+        <p>Yes. The CSV export includes invoice details, item descriptions, quantities, unit prices and calculated totals. You can open a CSV file in compatible spreadsheet software.</p>
       </div>
+
+      <div class="faq-item">
+        <h3>Does SwiftInvoice store invoices on its servers?</h3>
+        <p>The generator processes invoice information in your browser. The optional save feature uses local browser storage on your device; it does not create an online account or cloud backup.</p>
+      </div>
+
       <div class="faq-item">
         <h3>Can I use SwiftInvoice for my business?</h3>
-        <p>You can use the tool to prepare invoices for your business. You are responsible for checking that your invoices comply with local tax, accounting and legal requirements.</p>
+        <p>You can use it to prepare invoices. You are responsible for checking their accuracy and compliance with local tax, accounting and legal requirements.</p>
       </div>
+
+      <div class="faq-item">
+        <h3>Does the tax calculator decide which tax rate I should use?</h3>
+        <p>No. It calculates using the rate you enter. Check the rate and rules applicable to your business and transaction.</p>
+      </div>
+
       <div class="faq-item">
         <h3>How can I contact SwiftInvoice?</h3>
-        <p>Email us at <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>.</p>
+        <p>Email <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a> with your question or feedback. Avoid sending confidential customer or payment information unnecessarily.</p>
       </div>
     </section>
 
     <section id="about" class="card content-section">
-      <h2>About SwiftInvoice</h2>
-      <p>SwiftInvoice is a simple online tool designed to help freelancers, independent professionals and small businesses prepare invoices quickly. Our goal is to make basic invoicing accessible without requiring users to install software or create an account.</p>
-      <p>The tool provides invoice calculations, printing, PDF saving through your browser and CSV export. SwiftInvoice does not replace professional accounting advice or guarantee that an invoice meets every country's legal requirements.</p>
+      <h2 class="section-heading">About SwiftInvoice</h2>
+      <p>
+        SwiftInvoice is a browser-based tool designed to help freelancers,
+        independent professionals and small businesses prepare straightforward
+        invoices. The goal is to make basic invoicing accessible without
+        requiring software installation or an account.
+      </p>
+      <p>
+        The generator offers item calculations, discount and tax calculations,
+        print and PDF saving through the browser, CSV export, and optional
+        local saving. The service does not replace accounting software or
+        professional tax advice and does not guarantee that every invoice
+        meets the rules of every country.
+      </p>
     </section>
 
     <section id="contact" class="card content-section">
-      <h2>Contact Us</h2>
-      <p>Have a question, found a problem or want to share feedback about SwiftInvoice? Contact us by email.</p>
+      <h2 class="section-heading">Contact SwiftInvoice</h2>
+      <p>
+        Have a question, found a technical problem or want to share feedback?
+        You can contact us by email.
+      </p>
       <p><strong>Email:</strong> <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a></p>
-      <p>When reporting a technical issue, please describe what happened and which device or browser you are using. Do not email sensitive customer or payment information unless necessary.</p>
+      <p>
+        When reporting a technical issue, describe what happened and which
+        device and browser you are using. Please do not include sensitive
+        customer or payment information unless it is necessary.
+      </p>
     </section>
 
-    <section id="privacy" class="card content-section">
-      <h2>Privacy Policy</h2>
-      <p><strong>Last updated:</strong> October 15, 2026</p>
+    <section id="privacy" class="card policy-card content-section">
+      <h2 class="section-heading">Privacy Policy</h2>
+      <p><strong>Last updated:</strong> October 17, 2026</p>
 
       <h3>1. Introduction</h3>
-      <p>This Privacy Policy explains how SwiftInvoice handles information when you visit tryquickinvoice.com and use its invoice generator.</p>
+      <p>This Privacy Policy explains how SwiftInvoice handles information when you visit tryquickinvoice.com and use the invoice generator.</p>
 
       <h3>2. Information You Enter</h3>
-      <p>Information entered into the invoice generator, such as names, addresses, descriptions and prices, is processed in your browser to calculate and display your invoice. The save feature uses your browser's local storage on your device. This page does not send those invoice fields to a SwiftInvoice account or invoice database.</p>
-      <p>Anyone with access to your device or browser profile may be able to access locally saved invoice data. Clear saved data or use a secure device when appropriate.</p>
+      <p>
+        Information entered into the invoice generator, such as names, addresses,
+        descriptions and prices, is processed in your browser to calculate and
+        display your invoice. The optional save feature uses local storage in
+        your browser on your device. This page does not send those invoice fields
+        to a SwiftInvoice account or invoice database.
+      </p>
+      <p>
+        Anyone with access to your device or browser profile may be able to
+        access locally saved invoice data. Use a secure device and clear saved
+        data when appropriate.
+      </p>
 
       <h3>3. Contacting Us</h3>
-      <p>If you email us at <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>, we receive the information you include in your message and use it to respond to your enquiry and handle related follow-up.</p>
+      <p>
+        If you email us at <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>,
+        we receive the information you include in your message and use it to
+        respond to your enquiry and handle related follow-up.
+      </p>
 
       <h3>4. Cookies and Advertising</h3>
-      <p>This website may use Google AdSense to display advertising if advertising is enabled. Google and its partners may use cookies or similar technologies to serve, measure or personalise ads, subject to applicable settings, consent requirements and Google's policies. Advertising availability and personalisation depend on Google's services and your location.</p>
-      <p>You can learn more about how Google uses information from sites that use its services in Google's advertising and privacy documentation. You can also manage relevant Google ad settings through your Google account where available.</p>
+      <p>
+        This website may use Google AdSense to display advertising if advertising
+        is enabled. Google and its partners may use cookies or similar
+        technologies to serve, measure or personalise advertisements, subject
+        to applicable settings, consent requirements and Google's policies.
+        Advertising availability and personalisation can depend on Google's
+        services, your settings and your location.
+      </p>
+      <p>
+        For further information, review Google's advertising and privacy
+        documentation and manage relevant settings through your Google account
+        where available.
+      </p>
 
-      <h3>5. Analytics and Technical Data</h3>
-      <p>Hosting providers, security services or third-party tools may process technical information such as browser type, device information, IP address or access logs as part of delivering and protecting the website. The specific information collected depends on the services enabled for this website.</p>
+      <h3>5. Technical Information</h3>
+      <p>
+        Hosting providers, security services or third-party tools may process
+        technical information such as browser type, device information, IP
+        address or access logs to deliver, maintain and protect the website.
+        The information processed depends on the services actually enabled.
+      </p>
 
       <h3>6. Data Security and Retention</h3>
-      <p>Do not enter information you do not have permission to use. You are responsible for protecting access to your device and any locally saved invoices. Emails may be retained for as long as needed to handle your enquiry or meet applicable obligations.</p>
+      <p>
+        Do not enter information you do not have permission to use. You are
+        responsible for protecting access to your device and locally saved
+        invoices. Emails may be retained for as long as needed to handle your
+        enquiry or meet applicable obligations.
+      </p>
 
       <h3>7. Children's Privacy</h3>
       <p>This service is intended for general business use and is not designed to solicit personal information from children.</p>
 
       <h3>8. Your Rights</h3>
-      <p>Depending on your location, you may have rights relating to personal information. For privacy questions or requests, contact <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>.</p>
+      <p>
+        Depending on your location, you may have rights relating to personal
+        information. For privacy questions or requests, contact
+        <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>.
+      </p>
 
       <h3>9. Changes to This Policy</h3>
-      <p>We may update this policy when the website or its services change. The revised version will be published on this page with an updated date where appropriate.</p>
+      <p>We may update this policy when the website or its services change. The revised version will be published here with an updated date where appropriate.</p>
 
       <h3>10. Contact</h3>
       <p>For privacy enquiries, email <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>.</p>
     </section>
 
-    <section id="terms" class="card content-section">
-      <h2>Terms of Use</h2>
-      <p><strong>Last updated:</strong> October 15, 2026</p>
+    <section id="terms" class="card policy-card content-section">
+      <h2 class="section-heading">Terms of Use</h2>
+      <p><strong>Last updated:</strong> October 17, 2026</p>
 
       <h3>1. Acceptance</h3>
       <p>By using SwiftInvoice, you agree to these Terms of Use. If you do not agree, please stop using the service.</p>
 
       <h3>2. The Service</h3>
-      <p>SwiftInvoice provides a browser-based tool for preparing invoice documents. We may update, modify or discontinue features at any time.</p>
+      <p>SwiftInvoice provides a browser-based tool for preparing invoice documents. Features may be changed, updated or discontinued.</p>
 
       <h3>3. Your Responsibilities</h3>
-      <p>You are responsible for the accuracy of information entered, including customer details, prices, tax rates and payment instructions. Check the final invoice before sending it to a customer.</p>
+      <p>You are responsible for the accuracy of information entered, including customer details, descriptions, prices, tax rates and payment instructions. Review every invoice before sending it.</p>
 
       <h3>4. No Accounting or Legal Advice</h3>
       <p>SwiftInvoice does not provide accounting, tax or legal advice. The generator does not guarantee compliance with any particular country's invoicing rules. Seek qualified advice when necessary.</p>
@@ -565,31 +1293,40 @@
       <h3>5. Acceptable Use</h3>
       <p>You must not use the website for unlawful activity, fraud, infringement of others' rights or attempts to disrupt or damage the service.</p>
 
-      <h3>6. Availability</h3>
-      <p>We aim to make the website useful and available, but we do not guarantee uninterrupted operation, error-free calculations in every circumstance or permanent availability. Keep your own records of important invoices.</p>
+      <h3>6. Availability and Accuracy</h3>
+      <p>We aim to make the website useful and available, but do not guarantee uninterrupted operation or permanent availability. Check calculations and keep separate records of important invoices.</p>
 
       <h3>7. Third-Party Services</h3>
       <p>The website may use third-party services, including hosting and advertising. Those services may be subject to their own terms and privacy policies.</p>
 
-      <h3>8. Limitation</h3>
+      <h3>8. Liability</h3>
       <p>To the extent permitted by applicable law, SwiftInvoice is provided without a guarantee that it will meet every user's requirements. Nothing in these terms excludes rights or liability that cannot legally be excluded.</p>
 
       <h3>9. Changes</h3>
-      <p>We may revise these terms from time to time. Continued use after an update constitutes acceptance of the revised terms to the extent permitted by law.</p>
+      <p>We may revise these terms from time to time. Updated terms will be published on this page.</p>
 
       <h3>10. Contact</h3>
       <p>Questions about these terms can be sent to <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a>.</p>
     </section>
 
-    <div id="ad-bottom" class="card no-print" aria-label="Advertisement">
-      <p class="small">Advertisement</p>
-      <!-- Placeholder only. Configure real ads through AdSense when appropriate. -->
-    </div>
+    <section id="resources" class="callout content-section">
+      <h2>Ready to Prepare an Invoice?</h2>
+      <p>
+        Use the generator at the top of this page, or read the detailed guide
+        to learn about invoice details, calculations and payment terms.
+      </p>
+      <div class="button-row">
+        <a class="button" href="#generator">Create an Invoice</a>
+        <a class="button button-light" href="invoice-guide.html">Read the Invoice Guide</a>
+      </div>
+    </section>
+
   </div>
 </main>
 
 <footer>
-  <p><strong>SwiftInvoice</strong> — Simple invoicing for everyone.</p>
+  <p class="footer-brand">SwiftInvoice</p>
+  <p>Simple invoicing for everyone.</p>
   <p>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
@@ -600,7 +1337,7 @@
     <a href="#faq">FAQ</a>
   </p>
   <p>Contact: <a href="mailto:omarhammar79@gmail.com">omarhammar79@gmail.com</a></p>
-  <p class="small" style="color:#cbd5e1">© <span id="year"></span> SwiftInvoice. All rights reserved.</p>
+  <p class="small" style="color:#c7d2fe">© <span id="year"></span> SwiftInvoice. All rights reserved.</p>
 </footer>
 
 <script>
@@ -623,28 +1360,50 @@
     return localDateString(new Date());
   }
 
-  $("invoiceDate").value = todayString();
-
-  const due = new Date();
-  due.setDate(due.getDate() + 14);
-  $("dueDate").value = localDateString(due);
-  $("year").textContent = new Date().getFullYear();
+  function setStatus(message, isError = false) {
+    status.textContent = message;
+    status.classList.toggle("error", isError);
+  }
 
   function amount(value) {
     const number = Number(value);
     return Number.isFinite(number) ? number : 0;
   }
 
+  function readNonNegative(input, label, maximum = Number.MAX_SAFE_INTEGER) {
+    const raw = input.value.trim();
+
+    if (raw === "") {
+      return { value: 0, error: null };
+    }
+
+    const value = Number(raw);
+
+    if (!Number.isFinite(value) || value < 0 || value > maximum) {
+      return {
+        value: 0,
+        error: label + " must be a valid non-negative number."
+      };
+    }
+
+    return { value: value, error: null };
+  }
+
   function money(value) {
     const currency = $("currency").value;
+
     try {
-      return new Intl.NumberFormat("en", {
+      return new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: currency
       }).format(value);
     } catch (error) {
-      return currency + " " + value.toFixed(2);
+      return currency + " " + Number(value).toFixed(2);
     }
+  }
+
+  function numberForCsv(value) {
+    return Number(value).toFixed(2);
   }
 
   function makeInput(value, className, type, min, step) {
@@ -652,9 +1411,24 @@
     input.value = value;
     input.className = className || "";
     input.type = type || "text";
+
     if (min !== undefined) input.min = min;
     if (step !== undefined) input.step = step;
+
     return input;
+  }
+
+  function getRowValues(row) {
+    const inputs = row.querySelectorAll("input");
+    const quantityResult = readNonNegative(inputs[1], "Quantity");
+    const priceResult = readNonNegative(inputs[2], "Unit price");
+
+    return {
+      description: inputs[0].value.trim(),
+      quantity: quantityResult.value,
+      price: priceResult.value,
+      error: quantityResult.error || priceResult.error
+    };
   }
 
   function addItem(description = "", quantity = 1, price = 0) {
@@ -668,147 +1442,300 @@
 
     const quantityCell = document.createElement("td");
     const quantityInput = makeInput(quantity, "", "number", "0", "any");
+    quantityInput.inputMode = "decimal";
     quantityInput.setAttribute("aria-label", "Quantity");
     quantityCell.appendChild(quantityInput);
 
     const priceCell = document.createElement("td");
     const priceInput = makeInput(price, "", "number", "0", "any");
+    priceInput.inputMode = "decimal";
     priceInput.setAttribute("aria-label", "Unit price");
     priceCell.appendChild(priceInput);
 
     const totalCell = document.createElement("td");
-    totalCell.textContent = money(amount(quantity) * amount(price));
+    totalCell.textContent = money(0);
 
     const removeCell = document.createElement("td");
     removeCell.className = "no-print";
+
     const removeButton = document.createElement("button");
     removeButton.type = "button";
-    removeButton.className = "danger";
+    removeButton.className = "button button-danger button-small";
     removeButton.textContent = "Remove";
+    removeButton.setAttribute("aria-label", "Remove this invoice item");
+
     removeButton.addEventListener("click", function () {
       tr.remove();
-      if (!body.children.length) addItem();
+
+      if (!body.children.length) {
+        addItem();
+      }
+
       calculate();
     });
+
     removeCell.appendChild(removeButton);
 
     [descriptionInput, quantityInput, priceInput].forEach(input => {
       input.addEventListener("input", calculate);
+      input.addEventListener("change", calculate);
     });
 
-    tr.append(descriptionCell, quantityCell, priceCell, totalCell, removeCell);
+    tr.append(
+      descriptionCell,
+      quantityCell,
+      priceCell,
+      totalCell,
+      removeCell
+    );
+
     body.appendChild(tr);
     calculate();
   }
 
-  function calculate() {
+  function getInvoiceTotals() {
     let subtotal = 0;
+    const errors = [];
+    const items = [];
 
-    Array.from(body.rows).forEach(row => {
-      const inputs = row.querySelectorAll("input");
-      const quantity = Math.max(0, amount(inputs[1].value));
-      const price = Math.max(0, amount(inputs[2].value));
-      const lineTotal = quantity * price;
-      subtotal += lineTotal;
-      row.cells[3].textContent = money(lineTotal);
+    Array.from(body.rows).forEach((row, index) => {
+      const item = getRowValues(row);
+      const lineTotal = item.quantity * item.price;
+
+      if (!Number.isFinite(lineTotal)) {
+        errors.push("Item " + (index + 1) + " has an invalid total.");
+      }
+
+      if (item.error) {
+        errors.push("Item " + (index + 1) + ": " + item.error);
+      }
+
+      subtotal += Number.isFinite(lineTotal) ? lineTotal : 0;
+
+      items.push({
+        description: item.description,
+        quantity: item.quantity,
+        price: item.price,
+        lineTotal: Number.isFinite(lineTotal) ? lineTotal : 0
+      });
+
+      row.cells[3].textContent = money(
+        Number.isFinite(lineTotal) ? lineTotal : 0
+      );
     });
 
-    const discount = Math.min(subtotal, Math.max(0, amount($("discount").value)));
+    const discountResult = readNonNegative($("discount"), "Discount");
+    const taxResult = readNonNegative($("taxRate"), "Tax rate", 100);
+
+    if (discountResult.error) errors.push(discountResult.error);
+    if (taxResult.error) errors.push(taxResult.error);
+
+    const discount = Math.min(
+      subtotal,
+      Math.max(0, discountResult.value)
+    );
+
     const taxableAmount = Math.max(0, subtotal - discount);
-    const taxRate = Math.max(0, Math.min(100, amount($("taxRate").value)));
+    const taxRate = Math.min(100, Math.max(0, taxResult.value));
     const tax = taxableAmount * taxRate / 100;
     const total = taxableAmount + tax;
 
-    $("subtotal").textContent = money(subtotal);
-    $("discountTotal").textContent = money(discount);
-    $("taxTotal").textContent = money(tax);
-    $("grandTotal").textContent = money(total);
+    return {
+      items: items,
+      subtotal: subtotal,
+      discount: discount,
+      taxableAmount: taxableAmount,
+      taxRate: taxRate,
+      tax: tax,
+      total: total,
+      errors: errors
+    };
+  }
+
+  function calculate() {
+    const totals = getInvoiceTotals();
+
+    $("subtotal").textContent = money(totals.subtotal);
+    $("discountTotal").textContent = money(totals.discount);
+    $("taxTotal").textContent = money(totals.tax);
+    $("grandTotal").textContent = money(totals.total);
+
+    if (totals.errors.length) {
+      setStatus("Please correct invalid quantities, prices, discounts or tax rates before exporting.", true);
+    } else {
+      setStatus("");
+    }
+
+    return totals;
   }
 
   function invoiceData() {
-    const items = Array.from(body.rows).map(row => {
-      const inputs = row.querySelectorAll("input");
-      return {
-        description: inputs[0].value,
-        quantity: amount(inputs[1].value),
-        price: amount(inputs[2].value)
-      };
-    });
-
     const fields = [
-      "businessName", "businessEmail", "businessAddress",
-      "clientName", "clientEmail", "clientAddress",
-      "invoiceNumber", "currency", "invoiceDate", "dueDate",
-      "taxRate", "discount", "notes"
+      "businessName",
+      "businessEmail",
+      "businessAddress",
+      "clientName",
+      "clientEmail",
+      "clientAddress",
+      "invoiceNumber",
+      "currency",
+      "invoiceDate",
+      "dueDate",
+      "taxRate",
+      "discount",
+      "notes"
     ];
 
-    const data = { items: items };
-    fields.forEach(id => data[id] = $(id).value);
+    const data = {};
+
+    fields.forEach(id => {
+      data[id] = $(id).value;
+    });
+
+    const totals = getInvoiceTotals();
+
+    data.items = totals.items.map(item => ({
+      description: item.description,
+      quantity: item.quantity,
+      price: item.price
+    }));
+
     return data;
   }
 
   function loadData(data) {
     const fields = [
-      "businessName", "businessEmail", "businessAddress",
-      "clientName", "clientEmail", "clientAddress",
-      "invoiceNumber", "currency", "invoiceDate", "dueDate",
-      "taxRate", "discount", "notes"
+      "businessName",
+      "businessEmail",
+      "businessAddress",
+      "clientName",
+      "clientEmail",
+      "clientAddress",
+      "invoiceNumber",
+      "currency",
+      "invoiceDate",
+      "dueDate",
+      "taxRate",
+      "discount",
+      "notes"
     ];
 
     fields.forEach(id => {
-      if (data[id] !== undefined) $(id).value = data[id];
+      if (data[id] !== undefined && $(id)) {
+        $(id).value = data[id];
+      }
     });
 
     body.replaceChildren();
-    (data.items && data.items.length ? data.items : [{}]).forEach(item => {
-      addItem(item.description || "", item.quantity ?? 1, item.price ?? 0);
+
+    const savedItems = Array.isArray(data.items) && data.items.length
+      ? data.items
+      : [{}];
+
+    savedItems.forEach(item => {
+      const quantity = Math.max(0, amount(item.quantity ?? 1));
+      const price = Math.max(0, amount(item.price ?? 0));
+
+      addItem(
+        String(item.description ?? ""),
+        quantity,
+        price
+      );
     });
+
     calculate();
   }
 
-  $("addItem").addEventListener("click", () => addItem());
+  function validateInvoice() {
+    const totals = calculate();
+
+    if (totals.errors.length) {
+      setStatus("Please fix the invalid values before continuing.", true);
+      return false;
+    }
+
+    if (!Number.isFinite(totals.total)) {
+      setStatus("The invoice total is invalid. Check your item values.", true);
+      return false;
+    }
+
+    return true;
+  }
+
+  $("invoiceDate").value = todayString();
+
+  const defaultDueDate = new Date();
+  defaultDueDate.setDate(defaultDueDate.getDate() + 14);
+  $("dueDate").value = localDateString(defaultDueDate);
+
+  $("year").textContent = new Date().getFullYear();
+
+  $("addItem").addEventListener("click", function () {
+    addItem();
+  });
 
   ["taxRate", "discount", "currency"].forEach(id => {
     $(id).addEventListener("input", calculate);
     $(id).addEventListener("change", calculate);
   });
 
-  $("printInvoice").addEventListener("click", () => {
-    calculate();
+  $("printInvoice").addEventListener("click", function () {
+    if (!validateInvoice()) return;
+
+    setStatus("Opening the print window. Choose Save as PDF if you want a PDF copy.");
     window.print();
   });
 
-  $("saveInvoice").addEventListener("click", () => {
+  $("saveInvoice").addEventListener("click", function () {
+    if (!validateInvoice()) return;
+
     try {
       localStorage.setItem(storageKey, JSON.stringify(invoiceData()));
-      status.textContent = "Invoice saved in this browser on this device.";
+      setStatus("Invoice saved in this browser on this device.");
     } catch (error) {
-      status.textContent = "Could not save this invoice in browser storage.";
+      setStatus("Could not save the invoice. Browser storage may be unavailable or full.", true);
     }
   });
 
-  $("loadInvoice").addEventListener("click", () => {
+  $("loadInvoice").addEventListener("click", function () {
     try {
       const saved = localStorage.getItem(storageKey);
+
       if (!saved) {
-        status.textContent = "No saved invoice was found in this browser.";
+        setStatus("No saved invoice was found in this browser.", true);
         return;
       }
-      loadData(JSON.parse(saved));
-      status.textContent = "Saved invoice loaded.";
+
+      const data = JSON.parse(saved);
+
+      if (!data || typeof data !== "object" || !Array.isArray(data.items)) {
+        setStatus("The saved invoice could not be read. It may be invalid.", true);
+        return;
+      }
+
+      loadData(data);
+      setStatus("Saved invoice loaded. Please review the details before using it.");
     } catch (error) {
-      status.textContent = "Could not load the saved invoice.";
+      setStatus("Could not load the saved invoice.", true);
     }
   });
 
-  $("clearInvoice").addEventListener("click", () => {
-    if (!window.confirm("Clear all invoice details? Unsaved changes will be lost.")) return;
+  $("clearInvoice").addEventListener("click", function () {
+    if (!window.confirm("Clear all invoice details? Unsaved changes will be lost.")) {
+      return;
+    }
 
     [
-      "businessName", "businessEmail", "businessAddress",
-      "clientName", "clientEmail", "clientAddress",
-      "invoiceNumber", "notes"
-    ].forEach(id => $(id).value = "");
+      "businessName",
+      "businessEmail",
+      "businessAddress",
+      "clientName",
+      "clientEmail",
+      "clientAddress",
+      "notes"
+    ].forEach(id => {
+      $(id).value = "";
+    });
 
     $("invoiceNumber").value = "INV-001";
     $("currency").value = "GBP";
@@ -822,33 +1749,46 @@
 
     body.replaceChildren();
     addItem();
-    status.textContent = "The form has been cleared.";
+    calculate();
+    setStatus("The form has been cleared. Previously saved data remains in browser storage until overwritten or cleared.");
   });
 
-  $("downloadCsv").addEventListener("click", () => {
+  $("downloadCsv").addEventListener("click", function () {
+    if (!validateInvoice()) return;
+
     const data = invoiceData();
+    const totals = getInvoiceTotals();
+
     const rows = [
       ["Invoice Number", data.invoiceNumber],
       ["Invoice Date", data.invoiceDate],
       ["Due Date", data.dueDate],
+      ["Currency", data.currency],
       ["Business", data.businessName],
       ["Business Email", data.businessEmail],
+      ["Business Address", data.businessAddress],
       ["Customer", data.clientName],
       ["Customer Email", data.clientEmail],
+      ["Customer Address", data.clientAddress],
       [],
       ["Description", "Quantity", "Unit Price", "Line Total"]
     ];
 
-    data.items.forEach(item => rows.push([
-      item.description, item.quantity, item.price,
-      item.quantity * item.price
-    ]));
+    totals.items.forEach(item => {
+      rows.push([
+        item.description,
+        numberForCsv(item.quantity),
+        numberForCsv(item.price),
+        numberForCsv(item.lineTotal)
+      ]);
+    });
 
     rows.push([]);
-    rows.push(["Subtotal", $("subtotal").textContent]);
-    rows.push(["Discount", $("discountTotal").textContent]);
-    rows.push(["Tax", $("taxTotal").textContent]);
-    rows.push(["Total Due", $("grandTotal").textContent]);
+    rows.push(["Subtotal", numberForCsv(totals.subtotal)]);
+    rows.push(["Discount", numberForCsv(totals.discount)]);
+    rows.push(["Tax Rate (%)", numberForCsv(totals.taxRate)]);
+    rows.push(["Tax", numberForCsv(totals.tax)]);
+    rows.push(["Total Due", numberForCsv(totals.total)]);
     rows.push(["Notes", data.notes]);
 
     const csv = rows.map(row => row.map(value => {
@@ -859,17 +1799,26 @@
     const blob = new Blob(["\uFEFF" + csv], {
       type: "text/csv;charset=utf-8;"
     });
+
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
+
+    const safeName = (data.invoiceNumber || "swiftinvoice")
+      .replace(/[^a-z0-9_-]/gi, "_")
+      .slice(0, 80);
+
     link.href = url;
-    link.download = (data.invoiceNumber || "swiftinvoice") + ".csv";
+    link.download = safeName + ".csv";
+
     document.body.appendChild(link);
     link.click();
     link.remove();
 
-    // Delay revoking the URL to give the browser time to start the download.
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    status.textContent = "CSV file exported.";
+    window.setTimeout(function () {
+      URL.revokeObjectURL(url);
+    }, 1500);
+
+    setStatus("CSV exported with the same validated calculations used for the displayed totals.");
   });
 
   addItem();
